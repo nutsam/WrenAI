@@ -67,6 +67,60 @@ SQL:
 ### QUESTION ###
 User's Question: {{ query }}
 
+### CORE PRINCIPLES ###
+1. **SIMPLICITY FIRST**: Always choose the simplest query structure that answers the question correctly
+2. **EXACT REQUIREMENTS**: Return only what the question asks for - no extra columns or information
+3. **VERIFY LOGIC**: Ensure the query logic directly matches the question's intent
+
+### CONSTRAINTS ###
+- Always use **table aliases** (e.g., `FROM TABLE1 AS T1`).
+- All columns in the `SELECT` clause **must either be**:
+  1. included in the `GROUP BY` clause,
+  2. or wrapped with an aggregate function like `COUNT`, `MAX`, `MIN`, or `ANY_VALUE`.
+- Do not use columns in `ORDER BY` or `SELECT` that are not grouped or aggregated.
+- Use `ANY_VALUE(column)` when the exact value is not important in `GROUP BY` queries.
+- Do not use double quotes around alias names. Use `AS 別名` for aliasing.
+- The SQL must be **syntactically correct** and compatible with SQLite or DuckDB.
+- Avoid ambiguous column references. Always use `T1.column_name` or `T2.column_name`.
+
+### ADVANCED RULES ###
+- In any SQL query with `GROUP BY`, all columns in the `SELECT` clause must appear in the `GROUP BY` clause or be wrapped in aggregate functions.
+- This rule applies independently to each SELECT in compound queries (e.g., `UNION`, `INTERSECT`, `EXCEPT`).
+- For compound conditions involving different grouping levels, **split the logic into multiple subqueries**, and join on the correct key level (e.g., country-level vs manufacturer-level).
+- If filtering based on substrings like brand or model (e.g., `fiat`), always cast to lowercase and use `LIKE` with wildcards: `LOWER(column) LIKE '%fiat%'`.
+- When joining across multiple tables, use explicit join chains and table aliases to avoid incorrect mappings.
+
+### QUERY OPTIMIZATION GUIDELINES ###
+1. **Avoid Over-Engineering**:
+   - Don't use CTEs unless absolutely necessary for complex logic
+   - Prefer simple WHERE conditions over complex subqueries when possible
+   - Use direct aggregation instead of window functions when applicable
+
+2. **JOIN Strategy**:
+   - Verify each JOIN relationship matches the actual foreign key constraints
+   - Use the minimum number of JOINs required to answer the question
+   - When in doubt about table relationships, use the most direct path
+
+3. **Question Interpretation**:
+   - If asking for "minimum value", return the value (not the record)
+   - If asking for "which car", return identifying information (model/name)
+   - If asking for "count", return only the count number
+   - If asking for "countries without X", use NOT EXISTS or LEFT JOIN ... WHERE IS NULL
+
+4. **Common Patterns**:
+   - For "最小/最大值" questions: Use MIN()/MAX() directly
+   - For "哪個/哪些" questions: Use ORDER BY ... LIMIT or appropriate filtering
+   - For "多少個" questions: Use COUNT() with appropriate grouping
+   - For "沒有X的Y" questions: Use exclusion patterns (NOT IN, NOT EXISTS, LEFT JOIN with NULL check)
+
+### VALIDATION CHECKLIST ###
+Before finalizing the query, verify:
+- [ ] Does the query answer the exact question asked?
+- [ ] Are all JOINs using correct foreign key relationships?
+- [ ] Is this the simplest possible query structure?
+- [ ] Are all GROUP BY rules followed correctly?
+- [ ] Will this query actually execute without syntax errors?
+
 {% if sql_generation_reasoning %}
 ### REASONING PLAN ###
 {{ sql_generation_reasoning }}
