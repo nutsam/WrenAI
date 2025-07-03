@@ -1,0 +1,1470 @@
+dataset_id = "75710d98-62af-4ff1-820d-6e11c2b7c242"
+date = "2025_06_11"
+
+[mdl]
+catalog = "employee_hire_evaluation_zh"
+schema = "main"
+dataSource = "local_file"
+views = []
+metrics = []
+
+[[mdl.models]]
+name = "員工"
+primaryKey = "員工編號"
+
+[[mdl.models.columns]]
+name = "員工編號"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "姓名"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "年齡"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "城市"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "employee_hire_evaluation_zh"
+schema = "main"
+table = "員工"
+
+[[mdl.models]]
+name = "商店"
+primaryKey = "商店編號"
+
+[[mdl.models.columns]]
+name = "商店編號"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "店名"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "地點"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "區域"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "商品數量"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "店長姓名"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "employee_hire_evaluation_zh"
+schema = "main"
+table = "商店"
+
+[[mdl.models]]
+name = "招聘"
+primaryKey = "員工編號"
+
+[[mdl.models.columns]]
+name = "商店編號"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "員工編號"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "開始日期"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "是否全職"
+type = "others"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "employee_hire_evaluation_zh"
+schema = "main"
+table = "招聘"
+
+[[mdl.models]]
+name = "評估"
+primaryKey = "員工編號"
+
+[[mdl.models.columns]]
+name = "員工編號"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "獲獎年份"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "獎金"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "employee_hire_evaluation_zh"
+schema = "主要"
+table = "評估"
+
+[[mdl.relationships]]
+name = "招聘_員工編號_員工_員工編號"
+models = ["招聘", "員工"]
+joinType = "MANY_TO_MANY"
+condition = '"招聘.員工編號 = 員工.員工編號"'
+
+[[mdl.relationships]]
+name = "招聘_商店編號_商店_商店編號"
+models = ["招聘", "商店"]
+joinType = "MANY_TO_MANY"
+condition = '"招聘.商店編號 = 商店.商店編號"'
+
+[[mdl.relationships]]
+name = "評估_員工編號_員工_員工編號"
+models = ["評估", "員工"]
+joinType = "MANY_TO_MANY"
+condition = '"評估.員工編號 = 員工.員工編號"'
+
+[[eval_dataset]]
+categories = []
+question = "按年齡升序排列員工姓名。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+context = ["員工.年齡", "員工.姓名"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "列出員工姓名並按年齡升序排列。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset.samples]]
+question = "每個城市有多少名員工？"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+
+[[eval_dataset.samples]]
+question = "統計每個城市的員工數量。"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+
+[[eval_dataset.samples]]
+question = "哪些城市有超過一名30歲以下的員工？"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset]]
+categories = []
+question = "列出員工姓名並按年齡升序排列。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+context = ["員工.年齡", "員工.姓名"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "每個城市有多少名員工？"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+
+[[eval_dataset.samples]]
+question = "統計每個城市的員工數量。"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+
+[[eval_dataset.samples]]
+question = "哪些城市有超過一名30歲以下的員工？"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset]]
+categories = []
+question = "每個城市有多少名員工？"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+context = ["員工.城市"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  城市 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "統計每個城市的員工數量。"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+
+[[eval_dataset.samples]]
+question = "哪些城市有超過一名30歲以下的員工？"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset]]
+categories = []
+question = "統計每個城市的員工數量。"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"
+context = ["員工.城市"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  城市 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪些城市有超過一名30歲以下的員工？"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "哪些城市有超過一名30歲以下的員工？"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+context = ["員工.年齡", "員工.城市"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  城市 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+
+[[eval_dataset.samples]]
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "找出有超過一名30歲以下員工的城市。"
+sql = "SELECT 城市 FROM 員工 WHERE 年齡 < 30 GROUP BY 城市 HAVING count(*) > 1"
+context = ["員工.年齡", "員工.城市"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  城市 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset]]
+categories = []
+question = "找出每個地點的商店數量。"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+context = ["商店.地點"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  地點 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+
+[[eval_dataset.samples]]
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset]]
+categories = []
+question = "每個地點有多少家商店？"
+sql = "SELECT count(*) , 地點 FROM 商店 GROUP BY 地點"
+context = ["商店.地點"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  地點 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset]]
+categories = []
+question = "找出商品數量最多的商店的店長姓名和區域。"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+context = ["商店.區域", "商店.店長姓名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  店長姓名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序排列所有商店，並返回每家商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset]]
+categories = []
+question = "銷售商品數量最多的商店的店長姓名和區域是什麼？"
+sql = "SELECT 店長姓名 , 區域 FROM 商店 ORDER BY 商品數量 DESC LIMIT 1"
+context = ["商店.區域", "商店.店長姓名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  店長姓名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序排列所有商店，並返回每家商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量 > (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset]]
+categories = []
+question = "找出所有商店商品數量的最小值和最大值。"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+context = ["商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序排列所有商店，並返回每家商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量 > (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "哪些商店的商品數量高於平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量 > (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset]]
+categories = []
+question = "所有商店中商品數量的最小值和最大值是多少？"
+sql = "SELECT min(商品數量) , max(商品數量) FROM 商店"
+context = ["商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序排列所有商店，並返回每家商店的店名、地點和區域。"
+sql = "SELECT 店名 , 地點 , 區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量 > (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "哪些商店的商品數量高於平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量 > (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號 = t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "按商品數量降序排列，返回所有商店的店名、地點和區域。"
+sql = "SELECT 店名 ,  地點 ,  區域 FROM 商店 ORDER BY 商品數量 DESC"
+context = ["商店.區域", "商店.地點", "商店.店名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  地點 text,\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "按商品數量降序排列所有商店，返回每個商店的店名、地點和區域。"
+sql = "SELECT 店名 ,  地點 ,  區域 FROM 商店 ORDER BY 商品數量 DESC"
+
+[[eval_dataset.samples]]
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "哪些商店的商品數量超過平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "按商品數量降序排列所有商店，返回每個商店的店名、地點和區域。"
+sql = "SELECT 店名 ,  地點 ,  區域 FROM 商店 ORDER BY 商品數量 DESC"
+context = ["商店.區域", "商店.地點", "商店.店名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  地點 text,\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "哪些商店的商品數量超過平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "找出商品數量超過平均商品數量的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+context = ["商店.店名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪些商店的商品數量超過平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+
+[[eval_dataset.samples]]
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "哪些商店的商品數量超過平均值？請給我商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商品數量  >  (SELECT avg(商品數量) FROM 商店)"
+context = ["商店.店名", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset]]
+categories = []
+question = "找出在評估中獲獎次數最多的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+context = ["員工.員工編號", "員工.姓名", "評估.員工編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  員工編號 text PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset]]
+categories = []
+question = "哪位員工在評估中獲得最多獎項？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 GROUP BY t2.員工編號 ORDER BY count(*) DESC LIMIT 1"
+context = ["員工.員工編號", "員工.姓名", "評估.員工編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  員工編號 text PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "找出獲得最高單次獎金的員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+context = ["員工.員工編號", "員工.姓名", "評估.獎金", "評估.員工編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  獎金 number,\n  -- {\"alias\":\"\"}\n  員工編號 text PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪家商店擁有最多員工？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset]]
+categories = []
+question = "哪位員工獲得最高獎金？請給我員工姓名。"
+sql = "SELECT t1.姓名 FROM 員工 AS t1 JOIN 評估 AS t2 ON t1.員工編號  =  t2.員工編號 ORDER BY t2.獎金 DESC LIMIT 1"
+context = ["員工.員工編號", "員工.姓名", "評估.獎金", "評估.員工編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  獎金 number,\n  -- {\"alias\":\"\"}\n  員工編號 text PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪家商店擁有最多員工？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出沒有招聘任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset]]
+categories = []
+question = "找出從未在評估中獲得任何獎項的員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+context = ["員工.員工編號", "員工.姓名"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+
+[[eval_dataset.samples]]
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪家商店擁有最多員工？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出沒有招聘任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "哪些商店沒有員工運營？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset]]
+categories = []
+question = "哪些員工從未接受過任何評估？請給我員工姓名。"
+sql = "SELECT 姓名 FROM 員工 WHERE 員工編號 NOT IN (SELECT 員工編號 FROM 評估)"
+context = ["員工.員工編號", "員工.姓名"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 員工 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪家商店擁有最多員工？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出沒有招聘任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "哪些商店沒有員工運營？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "找出每個商店招聘的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) ,  t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset]]
+categories = []
+question = "哪家商店招聘的員工數量最多？"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+context = ["招聘.商店編號", "商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  商店編號 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "哪家商店擁有最多員工？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "找出沒有招聘任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "哪些商店沒有員工運營？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "找出每個商店招聘的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) ,  t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "對於每個商店，返回在該店工作的員工數量和商店名稱。"
+sql = "SELECT count(*) ,  t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號  =  t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset]]
+categories = []
+question = "哪家商店的員工最多？請給我商店名稱。"
+sql = "SELECT t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t1.商店編號 ORDER BY count(*) DESC LIMIT 1"
+context = ["招聘.商店編號", "商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  商店編號 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "找出沒有雇用任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "哪些商店沒有員工？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "找出每家商店雇用的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "對於每家商店，返回在那裡工作的員工數量和商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset]]
+categories = []
+question = "找出沒有雇用任何員工的商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+context = ["商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪些商店沒有員工？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+
+[[eval_dataset.samples]]
+question = "找出每家商店雇用的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "對於每家商店，返回在那裡工作的員工數量和商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset]]
+categories = []
+question = "哪些商店沒有員工？請找出商店名稱。"
+sql = "SELECT 店名 FROM 商店 WHERE 商店編號 NOT IN (SELECT 商店編號 FROM 招聘)"
+context = ["商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出每家商店雇用的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "對於每家商店，返回在那裡工作的員工數量和商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset]]
+categories = []
+question = "找出每家商店雇用的員工數量；同時顯示商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+context = ["招聘.商店編號", "商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  商店編號 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "對於每家商店，返回在那裡工作的員工數量和商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+
+[[eval_dataset.samples]]
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset]]
+categories = []
+question = "對於每家商店，返回在那裡工作的員工數量和商店名稱。"
+sql = "SELECT count(*) , t2.店名 FROM 招聘 AS t1 JOIN 商店 AS t2 ON t1.商店編號 = t2.商店編號 GROUP BY t2.店名"
+context = ["招聘.商店編號", "商店.店名", "商店.商店編號"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  商店編號 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  店名 text,\n  -- {\"alias\":\"\"}\n  商店編號 number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+
+[[eval_dataset.samples]]
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset]]
+categories = []
+question = "所有評估中給出的獎金總額是多少？"
+sql = "SELECT sum(獎金) FROM 評估"
+context = ["評估.獎金"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  獎金 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+
+[[eval_dataset.samples]]
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset]]
+categories = []
+question = "找出所有評估中給出的獎金總額。"
+sql = "SELECT sum(獎金) FROM 評估"
+context = ["評估.獎金"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 評估 (\n  -- {\"alias\":\"\"}\n  獎金 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset]]
+categories = []
+question = "給我所有關於招聘的資訊。"
+sql = "SELECT * FROM 招聘"
+context = ["招聘.員工編號", "招聘.是否全職", "招聘.商店編號", "招聘.開始日期"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  是否全職 others,\n  -- {\"alias\":\"\"}\n  商店編號 number,\n  -- {\"alias\":\"\"}\n  開始日期 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+
+[[eval_dataset.samples]]
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset]]
+categories = []
+question = "招聘的所有資訊是什麼？"
+sql = "SELECT * FROM 招聘"
+context = ["招聘.員工編號", "招聘.是否全職", "招聘.商店編號", "招聘.開始日期"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 招聘 (\n  -- {\"alias\":\"\"}\n  員工編號 number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  是否全職 others,\n  -- {\"alias\":\"\"}\n  商店編號 number,\n  -- {\"alias\":\"\"}\n  開始日期 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "有多少名員工？"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset]]
+categories = []
+question = "哪個區域既有商品少於3000件的商店，又有商品超過10000件的商店？"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+context = ["商店.區域", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+
+[[eval_dataset.samples]]
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "有多少名員工？"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "計算員工數量"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset]]
+categories = []
+question = "找出既有銷售少於3000件商品的商店，又有銷售超過10000件商品的商店的區域。"
+sql = "SELECT 區域 FROM 商店 WHERE 商品數量 < 3000 INTERSECT SELECT 區域 FROM 商店 WHERE 商品數量 > 10000"
+context = ["商店.區域", "商店.商品數量"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  區域 text,\n  -- {\"alias\":\"\"}\n  商品數量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "有多少名員工？"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "計算員工數量"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "按年齡升序排列員工姓名。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset]]
+categories = []
+question = "有多少個不同的商店地點？"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+context = ["商店.地點"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  地點 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+
+[[eval_dataset.samples]]
+question = "有多少名員工？"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "計算員工數量"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "按年齡升序排列員工姓名。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset.samples]]
+question = "列出員工姓名並按年齡升序排列。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset]]
+categories = []
+question = "計算不同商店地點的數量。"
+sql = "SELECT count(DISTINCT 地點) FROM 商店"
+context = ["商店.地點"]
+instructions = [""]
+
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 商店 (\n  -- {\"alias\":\"\"}\n  地點 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+
+[[eval_dataset.samples]]
+question = "有多少名員工？"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "計算員工數量"
+sql = "SELECT count(*) FROM 員工"
+
+[[eval_dataset.samples]]
+question = "按年齡升序排列員工姓名。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset.samples]]
+question = "列出員工姓名並按年齡升序排列。"
+sql = "SELECT 姓名 FROM 員工 ORDER BY 年齡"
+
+[[eval_dataset.samples]]
+question = "每個城市的員工數量是多少？"
+sql = "SELECT count(*) , 城市 FROM 員工 GROUP BY 城市"

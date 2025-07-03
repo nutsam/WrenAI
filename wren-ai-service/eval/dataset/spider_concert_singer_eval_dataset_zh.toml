@@ -1,0 +1,1388 @@
+dataset_id = "9a65b6b6-6aec-4f07-9567-cf235e1cd7ea"
+date = "2025_06_11"
+
+[mdl]
+catalog = "concert_singer_zh"
+schema = "main"
+dataSource = "local_file"
+views = []
+metrics = []
+
+[[mdl.models]]
+name = "體育場"
+primaryKey = "體育場_ID"
+
+[[mdl.models.columns]]
+name = "體育場_ID"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "地點"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "名稱"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "容量"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "最高"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "最低"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "平均"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "concert_singer_zh"
+schema = "main"
+table = "體育場"
+
+[[mdl.models]]
+name = "歌手"
+primaryKey = "歌手_ID"
+
+[[mdl.models.columns]]
+name = "歌手_ID"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "姓名"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "國家"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "歌曲名稱"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "歌曲發行年份"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "年齡"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "是否為男性"
+type = "others"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "concert_singer_zh"
+schema = "main"
+table = "歌手"
+
+[[mdl.models]]
+name = "演唱會"
+primaryKey = "演唱會_ID"
+
+[[mdl.models.columns]]
+name = "演唱會_ID"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "演唱會名稱"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "主題"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "體育場_ID"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "年份"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "concert_singer_zh"
+schema = "main"
+table = "演唱會"
+
+[[mdl.models]]
+name = "演唱會歌手"
+primaryKey = "演唱會_ID"
+
+[[mdl.models.columns]]
+name = "演唱會_ID"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "歌手_ID"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "concert_singer_zh"
+schema = "main"
+table = "演唱會歌手"
+
+[[mdl.relationships]]
+name = "演唱會_體育場ID_體育場_體育場ID"
+models = ["演唱會", "體育場"]
+joinType = "MANY_TO_MANY"
+condition = '"演唱會"."體育場_ID" = "體育場"."體育場_ID"'
+
+[[mdl.relationships]]
+name = "演唱會歌手_歌手ID_歌手_歌手ID"
+models = ["演唱會歌手", "歌手"]
+joinType = "MANY_TO_MANY"
+condition = '"演唱會歌手"."歌手_ID" = "歌手"."歌手_ID"'
+
+[[mdl.relationships]]
+name = "演唱會歌手_演唱會ID_演唱會_演唱會ID"
+models = ["演唱會歌手", "演唱會"]
+joinType = "MANY_TO_MANY"
+condition = '"演唱會歌手"."演唱會_ID" = "演唱會"."演唱會_ID"'
+
+[[eval_dataset]]
+categories = []
+question = "顯示所有歌手的姓名、國家、年齡，按年齡從最大到最小排序。"
+sql = "SELECT s.姓名 ,  s.國家 ,  s.年齡 FROM 歌手 AS s ORDER BY s.年齡 DESC"
+context = [ "歌手.年齡", "歌手.國家", "歌手.姓名",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "來自法國的所有歌手的平均、最小和最大年齡是多少？"
+sql = "SELECT avg(s.年齡), min(s.年齡), max(s.年齡) FROM 歌手 AS s WHERE s.國家 = '法國'"
+
+[[eval_dataset.samples]]
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱 ,  s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "顯示所有歌手的姓名、國家、年齡，按年齡從最小到最大排序。"
+sql = "SELECT s.姓名 ,  s.國家 ,  s.年齡 FROM 歌手 AS s ORDER BY s.年齡 ASC"
+
+
+[[eval_dataset]]
+categories = []
+question = "所有歌手的姓名、國家和年齡，按年齡降序排列？"
+sql = "SELECT s.姓名 ,  s.國家 ,  s.年齡 FROM 歌手 AS s ORDER BY s.年齡 DESC"
+context = [ "歌手.年齡", "歌手.國家", "歌手.姓名",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text,\n  -- {\"alias\":\"\"}\n  姓名 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "來自法國的所有歌手的平均、最小和最大年齡是多少？"
+sql = "SELECT avg(s.年齡), min(s.年齡), max(s.年齡) FROM 歌手 AS s WHERE s.國家 = '法國'"
+
+[[eval_dataset.samples]]
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱 ,  s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡  >  20"
+
+
+[[eval_dataset]]
+categories = []
+question = "來自法國的所有歌手的平均、最小和最大年齡是多少？"
+sql = "SELECT avg(s.年齡), min(s.年齡), max(s.年齡) FROM 歌手 AS s WHERE s.國家 = '法國'"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱 ,  s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡  >  20"
+
+[[eval_dataset.samples]]
+question = "總共有多少位歌手？"
+sql = "SELECT COUNT(*) FROM 歌手 AS s"
+
+
+[[eval_dataset]]
+categories = []
+question = "所有來自法國歌手的平均、最小和最大年齡是多少？"
+sql = "SELECT avg(s.年齡), min(s.年齡), max(s.年齡) FROM 歌手 AS s WHERE s.國家 = '法國'"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱, s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+
+[[eval_dataset.samples]]
+question = "總共有多少位歌手？"
+sql = "SELECT COUNT(*) FROM 歌手 AS s"
+
+
+[[eval_dataset]]
+categories = []
+question = "所有法國歌手的平均、最小和最大年齡是多少？"
+sql = "SELECT avg(s.年齡), min(s.年齡), max(s.年齡) FROM 歌手 AS s WHERE s.國家 = '法國'"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱, s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+
+[[eval_dataset.samples]]
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示最年輕歌手的歌曲名稱和發行年份。"
+sql = "SELECT s.歌曲名稱, s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+context = [ "歌手.年齡", "歌手.歌曲名稱", "歌手.歌曲發行年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text,\n  -- {\"alias\":\"\"}\n  歌曲發行年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+
+[[eval_dataset.samples]]
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+
+[[eval_dataset.samples]]
+question = "顯示所有25歲以上歌手的姓名、國家、年齡，按年齡排序。"
+sql = "SELECT s.姓名, s.國家, s.年齡 FROM 歌手 AS s WHERE s.年齡 > 25 ORDER BY s.年齡;"
+
+
+[[eval_dataset]]
+categories = []
+question = "最年輕歌手的所有歌曲名稱和發行年份是什麼？"
+sql = "SELECT s.歌曲名稱, s.歌曲發行年份 FROM 歌手 AS s ORDER BY s.年齡 ASC LIMIT 1"
+context = [ "歌手.年齡", "歌手.歌曲名稱", "歌手.歌曲發行年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text,\n  -- {\"alias\":\"\"}\n  歌曲發行年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+
+[[eval_dataset.samples]]
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+
+[[eval_dataset.samples]]
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+
+
+[[eval_dataset]]
+categories = []
+question = "20歲以上歌手來自哪些不同的國家？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+
+[[eval_dataset.samples]]
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+
+[[eval_dataset.samples]]
+question = "總共有多少位歌手？"
+sql = "SELECT COUNT(*) FROM 歌手 AS s"
+
+
+[[eval_dataset]]
+categories = []
+question = "有20歲以上歌手的不同國家有哪些？"
+sql = "SELECT DISTINCT s.國家 FROM 歌手 AS s WHERE s.年齡 > 20"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+
+[[eval_dataset.samples]]
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+
+[[eval_dataset.samples]]
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT t.地點, t.名稱 FROM 體育場 AS t WHERE t.容量 BETWEEN 5000 AND 10000"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示所有國家和每個國家的歌手數量。"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+context = [ "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+
+[[eval_dataset.samples]]
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT t.地點, t.名稱 FROM 體育場 AS t WHERE t.容量 BETWEEN 5000 AND 10000"
+
+[[eval_dataset.samples]]
+question = "顯示所有25歲以上歌手的姓名、國家、年齡，按年齡排序。"
+sql = "SELECT s.姓名, s.國家, s.年齡 FROM 歌手 AS s WHERE s.年齡 > 25 ORDER BY s.年齡;"
+
+
+[[eval_dataset]]
+categories = []
+question = "每個國家有多少位歌手？"
+sql = "SELECT s.國家, count(*) FROM 歌手 AS s GROUP BY s.國家"
+context = [ "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+
+[[eval_dataset.samples]]
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT t.地點, t.名稱 FROM 體育場 AS t WHERE t.容量 BETWEEN 5000 AND 10000"
+
+[[eval_dataset.samples]]
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(t.容量), avg(t.容量) FROM 體育場 AS t"
+
+
+[[eval_dataset]]
+categories = []
+question = "列出年齡高於平均值的歌手的所有歌曲名稱。"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+context = [ "歌手.年齡", "歌手.歌曲名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT t.地點, t.名稱 FROM 體育場 AS t WHERE t.容量 BETWEEN 5000 AND 10000"
+
+[[eval_dataset.samples]]
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(t.容量), avg(t.容量) FROM 體育場 AS t"
+
+[[eval_dataset.samples]]
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(t.容量), max(t.容量) FROM 體育場 AS t"
+
+
+[[eval_dataset]]
+categories = []
+question = "年齡超過平均值的歌手的所有歌曲名稱是什麼？"
+sql = "SELECT s.歌曲名稱 FROM 歌手 AS s WHERE s.年齡 > (SELECT avg(s2.年齡) FROM 歌手 AS s2)"
+context = [ "歌手.年齡", "歌手.歌曲名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT t.地點, t.名稱 FROM 體育場 AS t WHERE t.容量 BETWEEN 5000 AND 10000"
+
+[[eval_dataset.samples]]
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(t.容量), avg(t.容量) FROM 體育場 AS t"
+
+[[eval_dataset.samples]]
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(t.容量), max(t.容量) FROM 體育場 AS t"
+
+[[eval_dataset.samples]]
+question = "平均上座率最高的體育場的名稱和容量是什麼？"
+sql = "SELECT t.名稱, t.容量 FROM 體育場 AS t ORDER BY t.平均 DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示容量在5000到10000之間的所有體育場的地點和名稱。"
+sql = "SELECT T1.地點, T1.名稱 FROM 體育場 AS T1 WHERE T1.容量 BETWEEN 5000 AND 10000"
+context = [ "體育場.容量", "體育場.地點", "體育場.名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  容量 number,\n  -- {\"alias\":\"\"}\n  地點 text,\n  -- {\"alias\":\"\"}\n  名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(T1.容量), avg(T1.容量) FROM 體育場 AS T1"
+
+[[eval_dataset.samples]]
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(T1.容量), max(T1.容量) FROM 體育場 AS T1"
+
+[[eval_dataset.samples]]
+question = "平均上座率最高的體育場的名稱和容量是什麼？"
+sql = "SELECT T1.名稱, T1.容量 FROM 體育場 AS T1 ORDER BY T1.平均 DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "容量在5000到10000之間的所有體育場的地點和名稱是什麼？"
+sql = "SELECT T1.地點, T1.名稱 FROM 體育場 AS T1 WHERE T1.容量 BETWEEN 5000 AND 10000"
+context = [ "體育場.容量", "體育場.地點", "體育場.名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  容量 number,\n  -- {\"alias\":\"\"}\n  地點 text,\n  -- {\"alias\":\"\"}\n  名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(T1.容量), avg(T1.容量) FROM 體育場 AS T1"
+
+[[eval_dataset.samples]]
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(T1.容量), max(T1.容量) FROM 體育場 AS T1"
+
+[[eval_dataset.samples]]
+question = "平均上座率最高的體育場的名稱和容量是什麼？"
+sql = "SELECT T1.名稱, T1.容量 FROM 體育場 AS T1 ORDER BY T1.平均 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2014年或2015年有多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+
+
+[[eval_dataset]]
+categories = []
+question = "所有體育場的最大容量和平均值是多少？"
+sql = "SELECT max(T1.容量), avg(T1.容量) FROM 體育場 AS T1"
+context = [ "體育場.平均", "體育場.容量",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  平均 number,\n  -- {\"alias\":\"\"}\n  容量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(T1.容量), max(T1.容量) FROM 體育場 AS T1"
+
+[[eval_dataset.samples]]
+question = "平均上座率最高的體育場的名稱和容量是什麼？"
+sql = "SELECT T1.名稱, T1.容量 FROM 體育場 AS T1 ORDER BY T1.平均 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2014年或2015年有多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+
+
+[[eval_dataset]]
+categories = []
+question = "所有體育場的平均和最大容量是多少？"
+sql = "SELECT avg(T1.容量), max(T1.容量) FROM 體育場 AS T1"
+context = [ "體育場.容量",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  容量 number\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "平均上座率最高的體育場的名稱和容量是什麼？"
+sql = "SELECT T1.名稱, T1.容量 FROM 體育場 AS T1 ORDER BY T1.平均 DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2014年或2015年有多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+
+[[eval_dataset.samples]]
+question = "顯示體育場名稱和每個體育場的演唱會數量。"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "平均上座率最高的體育場名稱和容量是什麼？"
+sql = "SELECT T1.名稱, T1.容量 FROM 體育場 AS T1 ORDER BY T1.平均 DESC LIMIT 1"
+context = [ "體育場.平均", "體育場.容量", "體育場.名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  平均 number,\n  -- {\"alias\":\"\"}\n  容量 number,\n  -- {\"alias\":\"\"}\n  名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "2014年或2015年有多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+
+[[eval_dataset.samples]]
+question = "顯示體育場名稱和每個體育場的演唱會數量。"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+
+[[eval_dataset.samples]]
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "2014年或2015年有多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+context = [ "演唱會.年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示體育場名稱和每個體育場的演唱會數量。"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+
+[[eval_dataset.samples]]
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "2014年或2015年舉辦了多少場演唱會？"
+sql = "SELECT count(*) FROM 演唱會 AS T1 WHERE T1.年份 = '2014' OR T1.年份 = '2015'"
+context = [ "演唱會.年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示體育場名稱和每個體育場的演唱會數量。"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+
+[[eval_dataset.samples]]
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示體育場名稱和每個體育場的演唱會數量。"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+context = [ "演唱會.體育場_ID", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+
+
+[[eval_dataset]]
+categories = []
+question = "每個體育場舉辦了多少場演唱會？"
+sql = "SELECT T2.名稱, count(*) FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID GROUP BY T1.體育場_ID"
+context = [ "演唱會.體育場_ID", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示2014年或之後舉辦最多演唱會的體育場名稱和容量。"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 >= '2014' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.容量", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  容量 number,\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+
+
+[[eval_dataset]]
+categories = []
+question = "2013年後舉辦最多演唱會的體育場名稱和容量是什麼？"
+sql = "SELECT T2.名稱, T2.容量 FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 > '2013' GROUP BY T2.體育場_ID ORDER BY count(*) DESC LIMIT 1"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.容量", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  容量 number,\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+
+[[eval_dataset.samples]]
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+
+[[eval_dataset.samples]]
+question = "顯示40歲以上和30歲以下歌手共同來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+
+[[eval_dataset]]
+categories = []
+question = "哪一年舉辦的演唱會最多？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+context = [ "演唱會.年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+
+[[eval_dataset.samples]]
+question = "顯示40歲以上和30歲以下歌手共同來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+[[eval_dataset.samples]]
+question = "顯示所有體育場的名稱，除了2014年舉辦演唱會的體育場。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+
+[[eval_dataset]]
+categories = []
+question = "舉辦最多演唱會的是哪一年？"
+sql = "SELECT T1.年份 FROM 演唱會 AS T1 GROUP BY T1.年份 ORDER BY count(*) DESC LIMIT 1"
+context = [ "演唱會.年份",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+
+[[eval_dataset.samples]]
+question = "顯示40歲以上和30歲以下歌手共同來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+[[eval_dataset.samples]]
+question = "顯示所有體育場的名稱，除了2014年舉辦演唱會的體育場。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示沒有舉辦任何演唱會的體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+context = [ "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示40歲以上和30歲以下歌手共同來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+[[eval_dataset.samples]]
+question = "顯示所有體育場的名稱，除了2014年舉辦演唱會的體育場。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱和主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "哪些體育場沒有舉辦過任何演唱會？"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+context = [ "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示40歲以上和30歲以下歌手共同來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+[[eval_dataset.samples]]
+question = "顯示所有體育場的名稱，除了2014年舉辦演唱會的體育場。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱和主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+[[eval_dataset.samples]]
+question = "每場演唱會的名稱、主題和歌手數量是什麼？"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "沒有任何演唱會的體育場名稱是什麼？"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 WHERE T1.體育場_ID NOT IN (SELECT T2.體育場_ID FROM 演唱會 AS T2)"
+context = [ "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "顯示40歲以上歌手和30歲以下歌手都來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+
+[[eval_dataset.samples]]
+question = "顯示除了2014年有演唱會的體育場以外的所有體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱、主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示40歲以上歌手和30歲以下歌手都來自的國家。"
+sql = "SELECT T1.國家 FROM 歌手 AS T1 WHERE T1.年齡 > 40 INTERSECT SELECT T2.國家 FROM 歌手 AS T2 WHERE T2.年齡 < 30"
+context = [ "歌手.年齡", "歌手.國家",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  年齡 number,\n  -- {\"alias\":\"\"}\n  國家 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "顯示除了2014年有演唱會的體育場以外的所有體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱、主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+[[eval_dataset.samples]]
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示除了2014年有演唱會的體育場以外的所有體育場名稱。"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱、主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+[[eval_dataset.samples]]
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+
+
+[[eval_dataset]]
+categories = []
+question = "2014年沒有演唱會的體育場名稱是什麼？"
+sql = "SELECT T1.名稱 FROM 體育場 AS T1 EXCEPT SELECT T3.名稱 FROM 演唱會 AS T2 JOIN 體育場 AS T3 ON T2.體育場_ID = T3.體育場_ID WHERE T2.年份 = '2014'"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "顯示所有演唱會的名稱、主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+
+[[eval_dataset.samples]]
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+
+[[eval_dataset.samples]]
+question = "列出2014年演唱會中所有歌手的姓名。"
+sql = "SELECT T2.姓名 FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+
+
+[[eval_dataset]]
+categories = []
+question = "顯示所有演唱會的名稱、主題以及每場演唱會的歌手數量。"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+context = [ "演唱會.主題", "演唱會.演唱會_ID", "演唱會.演唱會名稱", "演唱會歌手.演唱會_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  主題 text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  演唱會名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+
+[[eval_dataset.samples]]
+question = "列出2014年演唱會中所有歌手的姓名。"
+sql = "SELECT T2.姓名 FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+
+
+[[eval_dataset]]
+categories = []
+question = "每場演唱會的名稱、主題和歌手數量是什麼？"
+sql = "SELECT T2.演唱會名稱, T2.主題, count(*) FROM 演唱會歌手 AS T1 JOIN 演唱會 AS T2 ON T1.演唱會_ID = T2.演唱會_ID GROUP BY T2.演唱會_ID"
+context = [ "演唱會.主題", "演唱會.演唱會_ID", "演唱會.演唱會名稱", "演唱會歌手.演唱會_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  主題 text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY,\n  -- {\"alias\":\"\"}\n  演唱會名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+
+[[eval_dataset.samples]]
+question = "列出2014年演唱會中所有歌手的姓名。"
+sql = "SELECT T2.姓名 FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "歌曲名稱中含有'嗨'字的歌手姓名和國籍是什麼？"
+sql = "SELECT T1.姓名, T1.國家 FROM 歌手 AS T1 WHERE T1.歌曲名稱 LIKE '%嗨%'"
+
+
+[[eval_dataset]]
+categories = []
+question = "列出歌手姓名以及每位歌手的演唱會數量。"
+sql = "SELECT T2.姓名, count(*) FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+context = [ "歌手.姓名", "歌手.歌手_ID", "演唱會歌手.歌手_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  姓名 text,\n  -- {\"alias\":\"\"}\n  歌手_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  歌手_ID text\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "列出2014年演唱會中所有歌手的姓名。"
+sql = "SELECT T2.姓名 FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "歌曲名稱中含有'嗨'字的歌手姓名和國籍是什麼？"
+sql = "SELECT T1.姓名, T1.國家 FROM 歌手 AS T1 WHERE T1.歌曲名稱 LIKE '%嗨%'"
+
+
+[[eval_dataset]]
+categories = []
+question = "每位歌手的姓名和演唱會數量是什麼？"
+sql = "SELECT T2.姓名 AS singer_name, count(*) AS concert_count FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID GROUP BY T2.歌手_ID"
+context = [ "歌手.姓名", "歌手.歌手_ID", "演唱會歌手.歌手_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  姓名 text,\n  -- {\"alias\":\"\"}\n  歌手_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  歌手_ID text\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.document]]
+id = "2"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  歌手_ID text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "2"
+[[eval_dataset.samples]]
+question = "列出2014年演唱會中所有歌手的姓名。"
+sql = "SELECT T2.姓名 AS singer_name FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+
+[[eval_dataset.samples]]
+question = "歌曲名稱中含有'嗨'字的歌手姓名和國籍是什麼？"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country FROM 歌手 WHERE 歌曲名稱 LIKE '%嗨%'"
+
+[[eval_dataset.samples]]
+question = "找出在2014年和2015年都有演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+
+
+[[eval_dataset]]
+categories = []
+question = "列出所有在2014年演唱會中演出的歌手姓名。"
+sql = "SELECT T2.姓名 AS singer_name FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+context = [ "演唱會.年份", "演唱會.演唱會_ID", "歌手.姓名", "歌手.歌手_ID", "演唱會歌手.歌手_ID", "演唱會歌手.演唱會_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  姓名 text,\n  -- {\"alias\":\"\"}\n  歌手_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.document]]
+id = "2"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會歌手 (\n  -- {\"alias\":\"\"}\n  歌手_ID text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "2"
+[[eval_dataset.samples]]
+question = "歌曲名稱中包含'Hey'的歌手姓名和國家是什麼？"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country FROM 歌手 WHERE 歌曲名稱 LIKE '%Hey%'"
+
+[[eval_dataset.samples]]
+question = "找出在2014年和2015年都有舉辦演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+
+
+[[eval_dataset]]
+categories = []
+question = "哪些歌手在2014年的演唱會中演出？"
+sql = "SELECT T2.姓名 AS singer_name FROM 演唱會歌手 AS T1 JOIN 歌手 AS T2 ON T1.歌手_ID = T2.歌手_ID JOIN 演唱會 AS T3 ON T1.演唱會_ID = T3.演唱會_ID WHERE T3.年份 = '2014'"
+context = [ "演唱會.年份", "演唱會.演唱會_ID", "歌手.姓名", "歌手.歌手_ID", "演唱會歌手.歌手_ID", "演唱會歌手.演唱會_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  年份 text,\n  -- {\"alias\":\"\"}\n  演唱會_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "歌曲名稱中包含'Hey'的歌手姓名和國家是什麼？"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country FROM 歌手 WHERE 歌曲名稱 LIKE '%Hey%'"
+
+[[eval_dataset.samples]]
+question = "找出在2014年和2015年都有舉辦演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+
+[[eval_dataset.samples]]
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+
+
+[[eval_dataset]]
+categories = []
+question = "歌曲名稱中包含'Hey'的歌手姓名和國家是什麼？"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country FROM 歌手 WHERE 歌曲名稱 LIKE '%Hey%'"
+context = [ "歌手.國家", "歌手.姓名", "歌手.歌曲名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  國家 text,\n  -- {\"alias\":\"\"}\n  姓名 text,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "找出在2014年和2015年都有舉辦演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+
+[[eval_dataset.samples]]
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+
+[[eval_dataset.samples]]
+question = "總共有多少位歌手？"
+sql = "SELECT COUNT(*) AS singer_count FROM 歌手"
+
+
+[[eval_dataset]]
+categories = []
+question = "歌曲標題中包含'Hey'字樣的每位歌手的姓名和原籍國是什麼？"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country FROM 歌手 WHERE 歌曲名稱 LIKE '%Hey%'"
+context = [ "歌手.國家", "歌手.姓名", "歌手.歌曲名稱",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 歌手 (\n  -- {\"alias\":\"\"}\n  國家 text,\n  -- {\"alias\":\"\"}\n  姓名 text,\n  -- {\"alias\":\"\"}\n  歌曲名稱 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE stadium (\n  -- {\"alias\":\"\"}\n  Location text,\n  -- {\"alias\":\"\"}\n  Name text,\n  -- {\"alias\":\"\"}\n  Stadium_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "找出在2014年和2015年都有舉辦演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+
+[[eval_dataset.samples]]
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+
+[[eval_dataset.samples]]
+question = "我們有多少位歌手？"
+sql = "SELECT count(*) AS singer_count FROM 歌手"
+
+
+[[eval_dataset]]
+categories = []
+question = "找出在2014年和2015年都有舉辦演唱會的體育場名稱和地點。"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.地點", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.document]]
+id = "1"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 體育場 (\n  -- {\"alias\":\"\"}\n  地點 text,\n  -- {\"alias\":\"\"}\n  名稱 text,\n  -- {\"alias\":\"\"}\n  體育場_ID number PRIMARY KEY\n);"
+
+[eval_dataset.document.meta]
+id = "1"
+[[eval_dataset.samples]]
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+
+[[eval_dataset.samples]]
+question = "我們有多少位歌手？"
+sql = "SELECT count(*) AS singer_count FROM 歌手"
+
+
+[[eval_dataset]]
+categories = []
+question = "在2014年和2015年都舉辦過演唱會的體育場名稱和地點是什麼？"
+sql = "SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2014' INTERSECT SELECT T2.名稱 AS stadium_name, T2.地點 AS location FROM 演唱會 AS T1 JOIN 體育場 AS T2 ON T1.體育場_ID = T2.體育場_ID WHERE T1.年份 = '2015'"
+context = [ "演唱會.體育場_ID", "演唱會.年份", "體育場.地點", "體育場.名稱", "體育場.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text,\n  -- {\"alias\":\"\"}\n  年份 text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+
+[[eval_dataset.samples]]
+question = "我們有多少位歌手？"
+sql = "SELECT count(*) AS singer_count FROM 歌手"
+
+[[eval_dataset.samples]]
+question = "顯示所有歌手的姓名、國家、年齡，按年齡從最老到最年輕排序。"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country, 年齡 AS age FROM 歌手 ORDER BY 年齡 DESC"
+
+
+[[eval_dataset]]
+categories = []
+question = "找出在容量最大的體育場舉辦的演唱會數量。"
+sql = "SELECT count(*) AS concert_count FROM 演唱會 WHERE 體育場_ID = (SELECT 體育場_ID FROM 體育場 ORDER BY 容量 DESC LIMIT 1)"
+context = [ "演唱會.體育場_ID",]
+instructions = [ "",]
+[[eval_dataset.document]]
+id = "0"
+content = "\n/* {\"alias\":\"\"} */\nCREATE TABLE 演唱會 (\n  -- {\"alias\":\"\"}\n  體育場_ID text\n);"
+
+[eval_dataset.document.meta]
+id = "0"
+[[eval_dataset.samples]]
+question = "我們有多少位歌手？"
+sql = "SELECT count(*) AS singer_count FROM 歌手"
+
+[[eval_dataset.samples]]
+question = "顯示所有歌手的姓名、國家、年齡，按年齡從最老到最年輕排序。"
+sql = "SELECT 姓名 AS singer_name, 國家 AS country, 年齡 AS age FROM 歌手 ORDER BY 年齡 DESC"
+
+[[eval_dataset.samples]]
+question = "來自法國的所有歌手的平均年齡、最小年齡和最大年齡是多少？"
+sql = "SELECT avg(年齡) AS avg_age, min(年齡) AS min_age, max(年齡) AS max_age FROM 歌手 WHERE 國家 = 'France'"
