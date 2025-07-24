@@ -375,18 +375,18 @@ def generate_components(configs: list[dict]) -> dict[str, PipelineComponent]:
         for type, configs in config.providers.items()
     }
 
-    def get(type: str, components: dict, instantiated_providers: dict):
+    def _get(type: str, components: dict, instantiated_providers: dict):
         identifier = components.get(type)
         return instantiated_providers[type].get(identifier)
 
     def componentize(components: dict, instantiated_providers: dict):
         return PipelineComponent(
-            embedder_provider=get("embedder", components, instantiated_providers),
-            llm_provider=get("llm", components, instantiated_providers),
-            document_store_provider=get(
+            embedder_provider=_get("embedder", components, instantiated_providers),
+            llm_provider=_get("llm", components, instantiated_providers),
+            document_store_provider=_get(
                 "document_store", components, instantiated_providers
             ),
-            engine=get("engine", components, instantiated_providers),
+            engine=_get("engine", components, instantiated_providers),
         )
 
     return {

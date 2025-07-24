@@ -70,7 +70,7 @@ class Settings(BaseSettings):
     development: bool = Field(default=False)
 
     # this is used to store the config like type: llm, embedder, etc. and we will process them later
-    config_path: str = Field(default="config.yaml")
+    config_path: str = Field(default="eval/config.yaml")
     _components: list[dict]
 
     sql_pairs_path: str = Field(default="sql_pairs.json")

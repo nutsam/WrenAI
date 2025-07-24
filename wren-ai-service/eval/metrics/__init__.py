@@ -11,6 +11,7 @@ from .llm import (
 )
 from .spider.exact_match import ExactMatchAccuracy
 from .spider.exec_match import ExecutionAccuracy
+from .spider.exec_match_postgres import PostgreSQLExecutionAccuracy
 
 __all__ = [
     "AccuracyMetric",
@@ -22,6 +23,7 @@ __all__ = [
     "FaithfulnessMetric",
     "ExactMatchAccuracy",
     "ExecutionAccuracy",
+    "PostgreSQLExecutionAccuracy",
     "QuestionToReasoningJudge",
     "ReasoningToSqlJudge",
     "SqlSemanticsJudge",

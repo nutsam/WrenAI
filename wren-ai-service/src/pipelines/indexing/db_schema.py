@@ -177,21 +177,78 @@ class DDLChunker:
             if join_type not in ["MANY_TO_ONE", "ONE_TO_MANY", "ONE_TO_ONE"]:
                 return None
 
-            # Get related table and foreign key column
-            is_source = table_name == models[0]
-            related_table = models[1] if is_source else models[0]
             condition_parts = condition.split(" = ")
-            fk_column = condition_parts[0 if is_source else 1].split(".")[1]
+            
+            # Parse table and column names from condition
+            # Format: "table_name"."column_name" = "table_name"."column_name"
+            left_parts = condition_parts[0].strip().split('.')
+            left_table = left_parts[0].strip('"')
+            left_column = left_parts[1].strip('"')
+            
+            right_parts = condition_parts[1].strip().split('.')
+            right_table = right_parts[0].strip('"')
+            right_column = right_parts[1].strip('"')
+            
+            # Determine foreign key direction based on join type
+            if join_type == "MANY_TO_ONE":
+                # Foreign key should be on the MANY side (models[0]) referencing the ONE side (models[1])
+                if table_name == models[0]:  # Current table is the MANY side
+                    # Determine which column belongs to the current table
+                    if left_table == table_name:
+                        fk_column = left_column
+                    else:
+                        fk_column = right_column
+                    
+                    related_table = models[1]
+                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                    
+                    return {
+                        "type": "FOREIGN_KEY",
+                        "comment": f'-- {{"condition": {condition}, "joinType": {join_type}}}\n  ',
+                        "constraint": fk_constraint,
+                        "tables": models,
+                    }
+                    
+            elif join_type == "ONE_TO_MANY":
+                # Foreign key should be on the MANY side (models[1]) referencing the ONE side (models[0])
+                if table_name == models[1]:  # Current table is the MANY side
+                    # Determine which column belongs to the current table
+                    if left_table == table_name:
+                        fk_column = left_column
+                    else:
+                        fk_column = right_column
+                    
+                    related_table = models[0]
+                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                    
+                    return {
+                        "type": "FOREIGN_KEY",
+                        "comment": f'-- {{"condition": {condition}, "joinType": {join_type}}}\n  ',
+                        "constraint": fk_constraint,
+                        "tables": models,
+                    }
+                    
+            elif join_type == "ONE_TO_ONE":
+                # For ONE_TO_ONE, foreign key can be on either side
+                # We'll put it on the table that comes first in the models array
+                if table_name == models[0]:
+                    # Determine which column belongs to the current table
+                    if left_table == table_name:
+                        fk_column = left_column
+                    else:
+                        fk_column = right_column
+                    
+                    related_table = models[1]
+                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                    
+                    return {
+                        "type": "FOREIGN_KEY",
+                        "comment": f'-- {{"condition": {condition}, "joinType": {join_type}}}\n  ',
+                        "constraint": fk_constraint,
+                        "tables": models,
+                    }
 
-            # Build foreign key constraint
-            fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
-
-            return {
-                "type": "FOREIGN_KEY",
-                "comment": f'-- {{"condition": {condition}, "joinType": {join_type}}}\n  ',
-                "constraint": fk_constraint,
-                "tables": models,
-            }
+            return None
 
         def _column_batch(
             model: Dict[str, Any], primary_keys_map: Dict[str, str]

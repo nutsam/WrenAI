@@ -9,7 +9,7 @@ from src.providers import LLMProvider
 
 
 class EvalResult(BaseModel):
-    score: float
+    score: int  # Changed from float to int
     reason: str
 
 
@@ -32,7 +32,11 @@ def format(response: dict) -> EvalResult:
 class QuestionToReasoningJudge(BaseMetric):
     _system_prompt = """
     You are an expert evaluator. Your task is to analyze the reasoning provided for a given question and determine if it makes sense. 
-    Provide a score in the range 0.0~1.0 and a detailed explanation for your evaluation.
+    Provide a score of either 0 or 1 and a detailed explanation for your evaluation.
+    
+    Scoring:
+    - Score 1: The reasoning is logical, coherent, and appropriately addresses the question
+    - Score 0: The reasoning is illogical, incoherent, or does not appropriately address the question
     """
     _test_case_prompt = """
     Question: 
@@ -43,7 +47,7 @@ class QuestionToReasoningJudge(BaseMetric):
     """
 
     def __init__(self, llm_provider: LLMProvider, **_):
-        self.threshold = 0
+        self.threshold = 1  # Changed threshold to 1 for binary scoring
         self.score = 0
         self.llm_provider = llm_provider
         self.llm = llm_provider.get_generator(
@@ -80,7 +84,11 @@ class QuestionToReasoningJudge(BaseMetric):
 class ReasoningToSqlJudge(BaseMetric):
     _system_prompt = """
     You are an expert evaluator. Your task is to analyze the reasoning provided for a given SQL query and determine if it makes sense. 
-    Provide a score in the range 0.0~1.0 and a detailed explanation for your evaluation.
+    Provide a score of either 0 or 1 and a detailed explanation for your evaluation.
+    
+    Scoring:
+    - Score 1: The reasoning correctly explains the SQL query logic and is coherent
+    - Score 0: The reasoning does not correctly explain the SQL query logic or is incoherent
     """
     _test_case_prompt = """
     Actual Output: 
@@ -91,7 +99,7 @@ class ReasoningToSqlJudge(BaseMetric):
     """
 
     def __init__(self, llm_provider: LLMProvider, **_):
-        self.threshold = 0
+        self.threshold = 1  # Changed threshold to 1 for binary scoring
         self.score = 0
         self.llm_provider = llm_provider
         self.llm = llm_provider.get_generator(
@@ -128,7 +136,29 @@ class ReasoningToSqlJudge(BaseMetric):
 class SqlSemanticsJudge(BaseMetric):
     _system_prompt = """
     You are an expert evaluator. Your task is to analyze the actual SQL query and the expected SQL query and determine if they are semantically equivalent. 
-    Provide a score in the range 0.0~1.0 and a detailed explanation for your evaluation.
+    Provide a score of either 0 or 1 and a detailed explanation for your evaluation.
+    
+    Scoring:
+    - Score 1: The queries are semantically equivalent (produce the same result set)
+    - Score 0: The queries are NOT semantically equivalent (produce different result sets)
+    
+    Evaluation Criteria for Score 1:
+    - Identical output: Same columns, same rows, same data types
+    - Logical equivalence: Different syntax but same logical meaning
+    - Order independence: Different ORDER BY clauses or missing ORDER BY (unless order is specifically required)
+    - Alias differences: Different column or table aliases that don't affect functionality
+    - Whitespace/formatting: Different formatting, spacing, or capitalization
+    - Equivalent expressions: Different but mathematically/logically equivalent conditions
+    - Join variations: Different join syntax producing same results
+    
+    Evaluation Criteria for Score 0:
+    - Different result sets: Produces different rows or columns
+    - Missing/extra columns: Different SELECT clause columns
+    - Different filtering: Different WHERE conditions affecting results
+    - Different aggregations: Different GROUP BY, HAVING, or aggregate functions
+    - Different data sources: Different tables or joins
+    - Syntax errors: Query contains syntax errors preventing execution
+    - Different business logic: Fundamentally different approach to solving the problem
     """
     _test_case_prompt = """
     Actual SQL: 
@@ -139,7 +169,7 @@ class SqlSemanticsJudge(BaseMetric):
     """
 
     def __init__(self, llm_provider: LLMProvider, **_):
-        self.threshold = 0
+        self.threshold = 1  # Changed threshold to 1 for binary scoring
         self.score = 0
         self.llm_provider = llm_provider
         self.llm = llm_provider.get_generator(

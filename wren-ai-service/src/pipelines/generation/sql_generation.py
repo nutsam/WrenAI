@@ -76,12 +76,82 @@ User's Question: {{ query }}
 - Always use **table aliases** (e.g., `FROM TABLE1 AS T1`).
 - All columns in the `SELECT` clause **must either be**:
   1. included in the `GROUP BY` clause,
-  2. or wrapped with an aggregate function like `COUNT`, `MAX`, `MIN`, or `ANY_VALUE`.
+  2. or wrapped with an aggregate function like `COUNT`, `MAX`, or `MIN`.
 - Do not use columns in `ORDER BY` or `SELECT` that are not grouped or aggregated.
-- Use `ANY_VALUE(column)` when the exact value is not important in `GROUP BY` queries.
-- Do not use double quotes around alias names. Use `AS 別名` for aliasing.
-- The SQL must be **syntactically correct** and compatible with SQLite or DuckDB.
-- Avoid ambiguous column references. Always use `T1.column_name` or `T2.column_name`.
+- When the exact value is not important in `GROUP BY` queries, use an aggregate function like `MAX()` or `MIN()` to select a representative value.
+- **Do not use double quotes around table names, column names, or aliases** unless the name contains special characters or spaces.
+- The SQL must be **syntactically correct** and compatible with **PostgreSQL**.
+- Avoid ambiguous column references. Always use `alias.column_name` format.
+- **Do not use SQL reserved keywords (e.g., `OR`, `AND`, `SELECT`, `FROM`, `GROUP`, `ORDER`) as alias names.** Use alternative names like `T1`, `reviews`, `items`, etc.
+- **Never treat column names as table names.** In `FROM` clauses, use actual table names only (e.g., `FROM table_name AS T1`). **Do not write `FROM "table"."column"`** or `FROM table.column`—this causes schema resolution errors.
+- **Table/column identification**: Carefully distinguish between table names and column names in the schema. Use only table names in FROM clauses.
+
+### TABLE ALIAS RULES ###
+1. **Define table aliases in FROM clause**: `FROM table_name AS alias`
+2. **Use aliases in SELECT**: `SELECT alias.column_name`
+3. **No quotes needed for standard names**: `FROM olist_products AS p`
+4. **Only use quotes when names contain special characters or spaces**: `FROM "table name with spaces" AS t`
+5. **Never quote standard aliases**: Use `AS p`, not `AS "p"`
+
+### CORRECT PATTERN ###
+```sql
+-- ✅ Standard pattern
+SELECT p.product_id, p.price
+FROM price_table AS p
+WHERE p.price > 100
+
+-- ❌ NEVER do this
+SELECT "table"."column" AS "alias"
+
+### DECIMAL PRECISION CONSTRAINTS ###
+**CRITICAL**: To avoid Decimal128 serialization errors, all aggregate functions returning decimal values MUST be wrapped with precision control:
+
+### QUOTE USAGE RULES ###
+- **Table names**: No quotes needed for standard table names
+- **Column names**: No quotes needed for standard column names  
+- **Aliases**: Never use quotes around aliases
+- **Only use quotes**: When names contain spaces or special characters
+
+### EXAMPLES ###
+```sql
+-- ✅ Correct - no unnecessary quotes
+SELECT customer_id, order_date
+FROM customers AS c
+
+-- ❌ Wrong - unnecessary quotes
+SELECT "customer_id", "order_date" 
+FROM "customers" AS "c"
+
+1. **AVG() Function - MANDATORY**:
+   ```sql
+   -- ❌ NEVER use: AVG(column)
+   -- ✅ ALWAYS use one of these:
+   CAST(AVG(column) AS NUMERIC(12,2))           -- For financial data
+   CAST(AVG(column) AS DOUBLE PRECISION)        -- For general numeric data
+   ROUND(AVG(column)::NUMERIC, 2)                        -- For rounded results
+   ```
+
+2. **Date/Time Calculations - MANDATORY**:
+   ```sql
+   -- ❌ NEVER use: AVG(date1 - date2)
+   -- ✅ ALWAYS use:
+   CAST(AVG(EXTRACT(EPOCH FROM (date1 - date2)) / 86400) AS DOUBLE PRECISION)
+   ROUND(AVG(EXTRACT(DAY FROM (date1 - date2)))::NUMERIC, 2)
+   ```
+
+3. **Other Statistical Functions**:
+   ```sql
+   -- Apply same precision control to:
+   CAST(STDDEV(column) AS NUMERIC(10,4))
+   CAST(VARIANCE(column) AS DOUBLE PRECISION)
+   ROUND(SUM(column)/COUNT(*)::NUMERIC, 2)  -- Manual average
+   ```
+
+4. **Data Type Guidelines**:
+   - **Financial data**: Use `NUMERIC(12,2)` or `NUMERIC(15,4)`
+   - **General averages**: Use `DOUBLE PRECISION`
+   - **Time periods**: Use `DOUBLE PRECISION` or `ROUND(...::NUMERIC, 2)`
+   - **Percentages**: Use `NUMERIC(5,4)` or `REAL`
 
 ### ADVANCED RULES ###
 - In any SQL query with `GROUP BY`, all columns in the `SELECT` clause must appear in the `GROUP BY` clause or be wrapped in aggregate functions.
@@ -111,7 +181,31 @@ User's Question: {{ query }}
    - For "最小/最大值" questions: Use MIN()/MAX() directly
    - For "哪個/哪些" questions: Use ORDER BY ... LIMIT or appropriate filtering
    - For "多少個" questions: Use COUNT() with appropriate grouping
-   - For "沒有X的Y" questions: Use exclusion patterns (NOT IN, NOT EXISTS, LEFT JOIN with NULL check)
+
+### PRECISION CONTROL EXAMPLES ###
+```sql
+-- Example 1: Average delivery time
+SELECT 
+    category,
+    CAST(AVG(EXTRACT(DAY FROM (delivered_date - order_date))) AS DOUBLE PRECISION) as avg_days
+FROM orders o
+JOIN products p ON o.product_id = p.id
+GROUP BY category;
+
+-- Example 2: Average price
+SELECT 
+    brand,
+    CAST(AVG(price) AS NUMERIC(10,2)) as avg_price
+FROM products
+GROUP BY brand;
+
+-- Example 3: Financial calculations
+SELECT 
+    region,
+    ROUND(AVG(revenue * tax_rate)::NUMERIC, 2) as avg_tax_amount
+FROM sales
+GROUP BY region;
+```
 
 ### VALIDATION CHECKLIST ###
 Before finalizing the query, verify:
@@ -119,14 +213,37 @@ Before finalizing the query, verify:
 - [ ] Are all JOINs using correct foreign key relationships?
 - [ ] Is this the simplest possible query structure?
 - [ ] Are all GROUP BY rules followed correctly?
+- [ ] **Are ALL AVG() and statistical functions wrapped with precision control?**
+- [ ] **Will this query avoid Decimal128 serialization errors?**
 - [ ] Will this query actually execute without syntax errors?
+- [ ] Column references use alias.column format
+- [ ] No quotes around standard table/column names
+- [ ] No "table.column AS alias" patterns
+
+### HIGH-RISK PATTERNS TO AVOID ###
+🚨 **These patterns WILL cause Decimal128 errors - NEVER use them:**
+```sql
+-- ❌ Naked AVG functions
+SELECT AVG(price) FROM products;
+SELECT AVG(EXTRACT(EPOCH FROM date_diff)/86400) FROM orders;
+
+-- ❌ Uncontrolled statistical functions  
+SELECT STDDEV(amount) FROM transactions;
+SELECT VARIANCE(score) FROM reviews;
+
+
+-- ✅ Correct PostgreSQL alternatives
+SELECT ROUND(AVG(price)::NUMERIC, 2) FROM products;
+SELECT CAST(AVG(price) AS NUMERIC(10,2)) FROM products;
+SELECT ROUND((SUM(amount)/COUNT(*))::NUMERIC, 2) FROM transactions;
+```
 
 {% if sql_generation_reasoning %}
 ### REASONING PLAN ###
 {{ sql_generation_reasoning }}
 {% endif %}
 
-Let's think step by step.
+Let's think step by step and ensure all aggregate functions use proper precision control.
 """
 
 
@@ -264,7 +381,8 @@ class SQLGeneration(BasicPipeline):
                 "sql_functions": sql_functions,
                 "use_dry_plan": use_dry_plan,
                 "allow_dry_plan_fallback": allow_dry_plan_fallback,
-                "data_source": metadata.get("data_source", "local_file"),
+                # "data_source": metadata.get("data_source", "local_file"),
+                "data_source": metadata.get("data_source", "postgres"),
                 **self._components,
                 **self._configs,
             },

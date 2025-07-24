@@ -39,7 +39,7 @@ def generate_meta(
         "dataset_id": dataset["dataset_id"],
         "evaluation_dataset": path,
         "query_count": len(dataset["eval_dataset"]),
-        "commit": obtain_commit_hash(),
+        "commit": "",
         "column_indexing_batch_size": settings.column_indexing_batch_size,
         "table_retrieval_size": settings.table_retrieval_size,
         "table_column_retrieval_size": settings.table_column_retrieval_size,
@@ -57,7 +57,8 @@ def write_prediction(
     if Path(dir_path).exists() is False:
         Path(dir_path).mkdir(parents=True, exist_ok=True)
 
-    output_file = f"prediction_{meta['session_id']}_{meta['date'].strftime('%Y_%m_%d_%H%M%S')}.toml"
+    # output_file = f"prediction_{meta['session_id']}_{meta['date'].strftime('%Y_%m_%d_%H%M%S')}.toml"
+    output_file = f"{meta['catalog']}_{meta['date'].strftime('%Y_%m_%d_%H%M%S')}.toml"
     output_path = f"{dir_path}/{output_file}"
 
     doc = document()
@@ -128,7 +129,7 @@ if __name__ == "__main__":
         )
     else:
         _connection_info = base64.b64encode(
-            orjson.dumps(settings.bigquery_info)
+            orjson.dumps(settings.postgres_info)
         ).decode("utf-8")
         replace_wren_engine_env_variables(
             "wren_ibis",

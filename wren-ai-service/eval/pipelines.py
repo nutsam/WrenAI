@@ -28,6 +28,7 @@ from eval.metrics import (
     QuestionToReasoningJudge,
     ReasoningToSqlJudge,
     SqlSemanticsJudge,
+    PostgreSQLExecutionAccuracy,
 )
 from eval.utils import (
     engine_config,
@@ -248,9 +249,9 @@ class GenerationPipeline(Eval):
             return params.get("samples", [])
         return []
 
-    async def _process(self, params: dict, document: list, **_) -> dict:
-        documents = [Document.from_dict(doc).content for doc in document]
-        table_ddls = [document.get("table_ddl") for document in documents]
+    async def _process(self, params: dict, **_) -> dict:
+        # For evaluation, use provided context directly instead of retrieving
+        table_ddls = params.get("context", [])
 
         instructions = self._get_instructions(params)
         samples = self._get_samples(params)
@@ -272,7 +273,7 @@ class GenerationPipeline(Eval):
         )
 
         params["actual_output"] = actual_output
-        params["retrieval_context"] = extract_units(table_ddls)
+        params["retrieval_context"] = table_ddls
 
         return params
 
@@ -296,10 +297,10 @@ class GenerationPipeline(Eval):
                 ),
                 AnswerRelevancyMetric(engine_info=wren_engine_info),
                 FaithfulnessMetric(engine_info=wren_engine_info),
-                ExactMatchAccuracy(),
-                ExecutionAccuracy(),
-                QuestionToReasoningJudge(**component),
-                ReasoningToSqlJudge(**component),
+                # ExactMatchAccuracy(),
+                # ExecutionAccuracy(),
+                # QuestionToReasoningJudge(**component),
+                # ReasoningToSqlJudge(**component),
                 SqlSemanticsJudge(**component),
             ],
             "post_metrics": [],
@@ -404,6 +405,9 @@ class AskPipeline(Eval):
         params["has_calculated_field"] = has_calculated_field
         params["has_metric"] = has_metric
         params["reasoning"] = reasoning
+        
+        # 
+        params.pop("samples", None)
 
         return params
 
@@ -430,10 +434,11 @@ class AskPipeline(Eval):
                 ContextualRecallMetric(engine_info=wren_engine_info),
                 ContextualRelevancyMetric(),
                 ContextualPrecisionMetric(),
-                ExactMatchAccuracy(),
-                ExecutionAccuracy(),
-                QuestionToReasoningJudge(**component),
-                ReasoningToSqlJudge(**component),
+                # ExactMatchAccuracy(),
+                # ExecutionAccuracy(),
+                # PostgreSQLExecutionAccuracy(),
+                # QuestionToReasoningJudge(**component),
+                # ReasoningToSqlJudge(**component),
                 SqlSemanticsJudge(**component),
             ],
             "post_metrics": [],

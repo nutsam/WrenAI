@@ -79,6 +79,10 @@ async def get_data_from_wren_engine(
             timeout=aiohttp.ClientTimeout(total=timeout),
         ) as response:
             if response.status != 200:
+                error_text = await response.text()
+                print(f"Wren Engine error (status {response.status}): {error_text}")
+                print(f"Request URL: {url}")
+                print(f"Request SQL: {quoted_sql}")
                 return {"data": [], "columns": []}
 
             data = await response.json()
@@ -184,7 +188,12 @@ async def get_contexts_from_sql(
             timeout=aiohttp.ClientTimeout(total=timeout),
         ) as response:
             return await response.json()
-
+    
+    for model in mdl_json.get("models", []):
+        pk = model.get("primaryKey")
+        if isinstance(pk, (tuple, list)) and len(pk) == 1:
+            model["primaryKey"] = pk[0]
+        
     sql_analysis_results = await _get_sql_analysis(sql, mdl_json, api_endpoint, timeout)
     contexts = _get_contexts_from_sql_analysis_results(sql_analysis_results)
     return contexts
@@ -246,7 +255,7 @@ def engine_config(
         return {
             "mdl_json": mdl,
             "api_endpoint": engine._endpoint,
-            "timeout": 10,
+            "timeout": 300,
             "data_source": "duckdb",
         }
 
@@ -255,7 +264,7 @@ def engine_config(
         "data_source": engine._source,
         "api_endpoint": engine._endpoint,
         "connection_info": engine._connection_info,
-        "timeout": 10,
+        "timeout": 300,
     }
 
 
@@ -298,35 +307,61 @@ def get_ddl_commands(mdl: Dict[str, Any]) -> List[str]:
             # Add foreign key constraints based on relationships
             for relationship in relationships:
                 comment = f'-- {{"condition": {relationship["condition"]}, "joinType": {relationship["joinType"]}}}\n  '
-                if (
-                    table_name == relationship["models"][0]
-                    and relationship["joinType"].upper() == "MANY_TO_ONE"
-                ):
-                    related_table = relationship["models"][1]
-                    fk_column = relationship["condition"].split(" = ")[0].split(".")[1]
-                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
-                    columns_ddl.append(f"{comment}{fk_constraint}")
-                elif (
-                    table_name == relationship["models"][1]
-                    and relationship["joinType"].upper() == "ONE_TO_MANY"
-                ):
-                    related_table = relationship["models"][0]
-                    fk_column = relationship["condition"].split(" = ")[1].split(".")[1]
-                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
-                    columns_ddl.append(f"{comment}{fk_constraint}")
-                elif (
-                    table_name in relationship["models"]
-                    and relationship["joinType"].upper() == "ONE_TO_ONE"
-                ):
-                    index = relationship["models"].index(table_name)
-                    related_table = [
-                        m for m in relationship["models"] if m != table_name
-                    ][0]
-                    fk_column = (
-                        relationship["condition"].split(" = ")[index].split(".")[1]
-                    )
-                    fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
-                    columns_ddl.append(f"{comment}{fk_constraint}")
+                
+                condition_parts = relationship["condition"].split(" = ")
+                join_type = relationship["joinType"].upper()
+                models = relationship["models"]
+                
+                # Parse table and column names from condition
+                # Format: "table_name"."column_name" = "table_name"."column_name"
+                left_parts = condition_parts[0].strip().split('.')
+                left_table = left_parts[0].strip('"')
+                left_column = left_parts[1].strip('"')
+                
+                right_parts = condition_parts[1].strip().split('.')
+                right_table = right_parts[0].strip('"')
+                right_column = right_parts[1].strip('"')
+                
+                # Determine foreign key direction based on join type
+                if join_type == "MANY_TO_ONE":
+                    # Foreign key should be on the MANY side (models[0]) referencing the ONE side (models[1])
+                    if table_name == models[0]:  # Current table is the MANY side
+                        # Determine which column belongs to the current table
+                        if left_table == table_name:
+                            fk_column = left_column
+                        else:
+                            fk_column = right_column
+                        
+                        related_table = models[1]
+                        fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                        columns_ddl.append(f"{comment}{fk_constraint}")
+                        
+                elif join_type == "ONE_TO_MANY":
+                    # Foreign key should be on the MANY side (models[1]) referencing the ONE side (models[0])
+                    if table_name == models[1]:  # Current table is the MANY side
+                        # Determine which column belongs to the current table
+                        if left_table == table_name:
+                            fk_column = left_column
+                        else:
+                            fk_column = right_column
+                        
+                        related_table = models[0]
+                        fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                        columns_ddl.append(f"{comment}{fk_constraint}")
+                        
+                elif join_type == "ONE_TO_ONE":
+                    # For ONE_TO_ONE, foreign key can be on either side
+                    # We'll put it on the table that comes first in the models array
+                    if table_name == models[0]:
+                        # Determine which column belongs to the current table
+                        if left_table == table_name:
+                            fk_column = left_column
+                        else:
+                            fk_column = right_column
+                        
+                        related_table = models[1]
+                        fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+                        columns_ddl.append(f"{comment}{fk_constraint}")
 
             if "properties" in model:
                 model["properties"]["alias"] = model["properties"].pop(

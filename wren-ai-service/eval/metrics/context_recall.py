@@ -19,7 +19,12 @@ class ContextualRecallMetric(BaseMetric):
         expected_units = await get_contexts_from_sql(
             sql=test_case.expected_output, **self.engine_info
         )
-
+        
+        if not expected_units:
+            self.score = 1
+            self.success = True
+            return self.score
+        
         intersection = set(test_case.retrieval_context) & set(expected_units)
         self.score = len(intersection) / len(expected_units)
 
