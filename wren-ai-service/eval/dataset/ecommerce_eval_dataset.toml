@@ -1,0 +1,1132 @@
+dataset_id = "olist-ecommerce-dataset"
+date = "2025_07_10"
+
+[mdl]
+catalog = "ecommerce"
+schema = "public"
+dataSource = "postgres"
+views = []
+metrics = []
+
+# 客戶數據表
+[[mdl.models]]
+name = "olist_customers_dataset"
+primaryKey = "customer_id"
+
+[[mdl.models.columns]]
+name = "customer_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "customer_unique_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "customer_zip_code_prefix"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "customer_city"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "customer_state"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_customers_dataset"
+
+# 地理位置數據表
+[[mdl.models]]
+name = "olist_geolocation_dataset"
+
+[[mdl.models.columns]]
+name = "geolocation_zip_code_prefix"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "geolocation_lat"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "geolocation_lng"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "geolocation_city"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "geolocation_state"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_geolocation_dataset"
+
+# 訂單項目數據表
+[[mdl.models]]
+name = "olist_order_items_dataset"
+
+[[mdl.models.columns]]
+name = "order_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_item_id"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "seller_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "shipping_limit_date"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "price"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "freight_value"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_order_items_dataset"
+
+# 訂單支付數據表
+[[mdl.models]]
+name = "olist_order_payments_dataset"
+
+[[mdl.models.columns]]
+name = "order_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "payment_sequential"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "payment_type"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "payment_installments"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "payment_value"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_order_payments_dataset"
+
+# 訂單評價數據表
+[[mdl.models]]
+name = "olist_order_reviews_dataset"
+primaryKey = "review_id"
+
+[[mdl.models.columns]]
+name = "review_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "review_score"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "review_comment_title"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "review_comment_message"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "review_creation_date"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "review_answer_timestamp"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_order_reviews_dataset"
+
+# 訂單數據表
+[[mdl.models]]
+name = "olist_orders_dataset"
+primaryKey = "order_id"
+
+[[mdl.models.columns]]
+name = "order_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "customer_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_status"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_purchase_timestamp"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_approved_at"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_delivered_carrier_date"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_delivered_customer_date"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "order_estimated_delivery_date"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_orders_dataset"
+
+# 產品數據表
+[[mdl.models]]
+name = "olist_products_dataset"
+primaryKey = "product_id"
+
+[[mdl.models.columns]]
+name = "product_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_category_name"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_name_lenght"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_description_lenght"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_photos_qty"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_weight_g"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_length_cm"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_height_cm"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_width_cm"
+type = "number"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_products_dataset"
+
+# 賣家數據表
+[[mdl.models]]
+name = "olist_sellers_dataset"
+primaryKey = "seller_id"
+
+[[mdl.models.columns]]
+name = "seller_id"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "seller_zip_code_prefix"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "seller_city"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "seller_state"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "olist_sellers_dataset"
+
+# 產品類別翻譯表
+[[mdl.models]]
+name = "product_category_name_translation"
+
+[[mdl.models.columns]]
+name = "product_category_name"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[[mdl.models.columns]]
+name = "product_category_name_english"
+type = "text"
+notNull = false
+
+[mdl.models.columns.properties]
+
+[mdl.models.properties]
+
+[mdl.models.tableReference]
+catalog = "ecommerce"
+schema = "public"
+table = "product_category_name_translation"
+
+# 表關系定義
+[[mdl.relationships]]
+name = "orders_customers"
+models = ["olist_orders_dataset", "olist_customers_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_orders_dataset"."customer_id" = "olist_customers_dataset"."customer_id"'
+
+[[mdl.relationships]]
+name = "order_items_orders"
+models = ["olist_order_items_dataset", "olist_orders_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_order_items_dataset"."order_id" = "olist_orders_dataset"."order_id"'
+
+[[mdl.relationships]]
+name = "order_items_products"
+models = ["olist_order_items_dataset", "olist_products_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_order_items_dataset"."product_id" = "olist_products_dataset"."product_id"'
+
+[[mdl.relationships]]
+name = "order_items_sellers"
+models = ["olist_order_items_dataset", "olist_sellers_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_order_items_dataset"."seller_id" = "olist_sellers_dataset"."seller_id"'
+
+[[mdl.relationships]]
+name = "order_payments_orders"
+models = ["olist_order_payments_dataset", "olist_orders_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_order_payments_dataset"."order_id" = "olist_orders_dataset"."order_id"'
+
+[[mdl.relationships]]
+name = "order_reviews_orders"
+models = ["olist_order_reviews_dataset", "olist_orders_dataset"]
+joinType = "ONE_TO_ONE"
+condition = '"olist_order_reviews_dataset"."order_id" = "olist_orders_dataset"."order_id"'
+
+[[mdl.relationships]]
+name = "products_category_translation"
+models = ["olist_products_dataset", "product_category_name_translation"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_products_dataset"."product_category_name" = "product_category_name_translation"."product_category_name"'
+
+[[mdl.relationships]]
+name = "customers_geolocation"
+models = ["olist_customers_dataset", "olist_geolocation_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_customers_dataset"."customer_zip_code_prefix" = "olist_geolocation_dataset"."geolocation_zip_code_prefix"'
+
+[[mdl.relationships]]
+name = "sellers_geolocation"
+models = ["olist_sellers_dataset", "olist_geolocation_dataset"]
+joinType = "MANY_TO_ONE"
+condition = '"olist_sellers_dataset"."seller_zip_code_prefix" = "olist_geolocation_dataset"."geolocation_zip_code_prefix"'
+
+# 1. 簡單統計查詢
+[[eval_dataset]]
+categories = ["basic_stats"]
+question = "總共有多少個客戶？"
+sql = "SELECT COUNT(*) FROM olist_customers_dataset;"
+context = ["olist_customers_dataset.customer_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個不同的產品類別？"
+sql = "SELECT COUNT(DISTINCT product_category_name) FROM olist_products_dataset WHERE product_category_name IS NOT NULL;"
+
+# 2. 訂單狀態分析
+[[eval_dataset]]
+categories = ["order_analysis"]
+question = "每種訂單狀態有多少個訂單？按數量降序排列。"
+sql = "SELECT order_status, COUNT(*) as order_count FROM olist_orders_dataset GROUP BY order_status ORDER BY order_count DESC;"
+context = ["olist_orders_dataset.order_status"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "2017年有多少種不同的訂單狀態？"
+sql = "SELECT COUNT(DISTINCT order_status) as status_count FROM olist_orders_dataset WHERE EXTRACT(YEAR FROM order_purchase_timestamp::timestamp) = 2017;"
+
+# 3. 支付方式分析
+[[eval_dataset]]
+categories = ["payment_analysis"]
+question = "最受歡迎的支付方式是什麽？顯示支付方式和使用次數。"
+sql = "SELECT payment_type, COUNT(*) as usage_count FROM olist_order_payments_dataset GROUP BY payment_type ORDER BY usage_count DESC LIMIT 1;"
+context = ["olist_order_payments_dataset.payment_type"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "信用卡支付的總次數是多少？"
+sql = "SELECT COUNT(*) as credit_card_count FROM olist_order_payments_dataset WHERE payment_type = 'credit_card';"
+
+# 4. 地理位置分析
+[[eval_dataset]]
+categories = ["geographic_analysis"]
+question = "哪個州的客戶最多？顯示州名和客戶數量。"
+sql = "SELECT customer_state, COUNT(*) as customer_count FROM olist_customers_dataset GROUP BY customer_state ORDER BY customer_count DESC LIMIT 1;"
+context = ["olist_customers_dataset.customer_state"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "賣家最多的州有多少個賣家？"
+sql = "SELECT seller_state, COUNT(*) as seller_count FROM olist_sellers_dataset GROUP BY seller_state ORDER BY seller_count DESC LIMIT 1;"
+
+# 5. 產品名稱長度分析
+[[eval_dataset]]
+categories = ["product_name_analysis"]
+question = "產品名稱的最大長度是多少？"
+sql = "SELECT MAX(product_name_lenght) as max_name_length FROM olist_products_dataset WHERE product_name_lenght IS NOT NULL;"
+context = ["olist_products_dataset.product_name_lenght"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個產品類別有英文名稱？"
+sql = "SELECT COUNT(DISTINCT product_category_name_english) as english_category_count FROM product_category_name_translation;"
+
+# 6. 訂單金額分析
+[[eval_dataset]]
+categories = ["revenue_analysis"]
+question = "總訂單金額是多少？"
+sql = "SELECT SUM(price + freight_value) as total_revenue FROM olist_order_items_dataset;"
+context = ["olist_order_items_dataset.price", "olist_order_items_dataset.freight_value"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最高訂單價值是多少？"
+sql = "SELECT MAX(price) as max_order_value FROM olist_order_items_dataset;"
+
+# 7. 評價分析
+[[eval_dataset]]
+categories = ["review_analysis"]
+question = "每個評分的訂單數量是多少？按評分排序。"
+sql = "SELECT review_score, COUNT(*) as review_count FROM olist_order_reviews_dataset GROUP BY review_score ORDER BY review_score;"
+context = ["olist_order_reviews_dataset.review_score"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最高評分有多少筆評價？"
+sql = "SELECT COUNT(*) as five_star_reviews FROM olist_order_reviews_dataset WHERE review_score = 5;"
+
+# 8. 產品數量統計
+[[eval_dataset]]
+categories = ["product_stats"]
+question = "有多少個產品有重量資訊？"
+sql = "SELECT COUNT(*) FROM olist_products_dataset WHERE product_weight_g IS NOT NULL;"
+context = ["olist_products_dataset.product_weight_g"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "SP州的平均評分是多少？"
+sql = "SELECT ROUND(AVG(t4.review_score)::NUMERIC, 2) as avg_rating FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_reviews_dataset t4 ON t1.order_id = t4.order_id WHERE t2.customer_state = 'SP';"
+
+# 9. 時間序列分析
+[[eval_dataset]]
+categories = ["time_series"]
+question = "2017年有多少個訂單？"
+sql = "SELECT COUNT(*) as order_count FROM olist_orders_dataset WHERE EXTRACT(YEAR FROM order_purchase_timestamp::timestamp) = 2017;"
+context = ["olist_orders_dataset.order_purchase_timestamp"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "2017年12月的訂單數量是多少？"
+sql = "SELECT COUNT(*) as december_orders FROM olist_orders_dataset WHERE EXTRACT(YEAR FROM order_purchase_timestamp::timestamp) = 2017 AND EXTRACT(MONTH FROM order_purchase_timestamp::timestamp) = 12;"
+
+# 10. 賣家分析
+[[eval_dataset]]
+categories = ["seller_analysis"]
+question = "哪個賣家的銷售額最高？顯示賣家ID和總銷售額。"
+sql = "SELECT seller_id, SUM(price) as total_sales FROM olist_order_items_dataset GROUP BY seller_id ORDER BY total_sales DESC LIMIT 1;"
+context = ["olist_order_items_dataset.seller_id", "olist_order_items_dataset.price"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "銷售商品最多的賣家銷售了多少件？"
+sql = "SELECT seller_id, COUNT(*) as items_sold FROM olist_order_items_dataset GROUP BY seller_id ORDER BY items_sold DESC LIMIT 1;"
+
+# 11. 客戶行為分析
+[[eval_dataset]]
+categories = ["customer_behavior"]
+question = "有多少客戶購買了超過一次？"
+sql = "SELECT COUNT(*) as repeat_customers FROM (SELECT customer_id, COUNT(*) as purchase_count FROM olist_orders_dataset GROUP BY customer_id HAVING COUNT(*) > 1) t;"
+context = ["olist_orders_dataset.customer_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "平均訂單價值最高的客戶的平均價值是多少？"
+sql = "SELECT t1.customer_id, ROUND(AVG(t2.price)::NUMERIC, 2) as avg_order_value FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id GROUP BY t1.customer_id ORDER BY avg_order_value DESC LIMIT 1;"
+
+# 12. 地理位置深度分析
+[[eval_dataset]]
+categories = ["geolocation_analysis"]
+question = "哪個城市的客戶最多？顯示城市名稱和客戶數量。"
+sql = "SELECT customer_city, COUNT(*) as customer_count FROM olist_customers_dataset GROUP BY customer_city ORDER BY customer_count DESC LIMIT 1;"
+context = ["olist_customers_dataset.customer_city"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "RJ州有多少個客戶？"
+sql = "SELECT COUNT(*) as rj_customers FROM olist_customers_dataset WHERE customer_state = 'RJ';"
+
+# 13. 賣家訂單分析 (2張表)
+[[eval_dataset]]
+categories = ["seller_order_analysis"]
+question = "哪個賣家的訂單數量最多？顯示賣家ID和訂單數量。"
+sql = "SELECT seller_id, COUNT(DISTINCT order_id) as order_count FROM olist_order_items_dataset GROUP BY seller_id ORDER BY order_count DESC LIMIT 1;"
+context = ["olist_order_items_dataset.seller_id", "olist_order_items_dataset.order_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "平均商品價格最高的賣家的平均價格是多少？"
+sql = "SELECT seller_id, ROUND(AVG(price)::NUMERIC, 2) as avg_price FROM olist_order_items_dataset GROUP BY seller_id ORDER BY avg_price DESC LIMIT 1;"
+
+# 14. 州級訂單分析 (2張表)
+[[eval_dataset]]
+categories = ["state_order_analysis"]
+question = "訂單最多的州有多少個訂單？"
+sql = "SELECT COUNT(*) AS order_num FROM olist_orders_dataset AS T1 JOIN olist_customers_dataset AS T2 ON T1.customer_id = T2.customer_id WHERE T2.customer_state = (SELECT T2.customer_state FROM olist_orders_dataset AS T1 JOIN olist_customers_dataset AS T2 ON T1.customer_id = T2.customer_id GROUP BY T2.customer_state ORDER BY COUNT(*) DESC LIMIT 1);"
+context = ["olist_orders_dataset.customer_id", "olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "SP州的訂單總金額是多少？"
+sql = "SELECT SUM(t3.price + t3.freight_value) as total_amount FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t1.order_id = t3.order_id WHERE t2.customer_state = 'SP';"
+
+# 15. 支付方式分析 (2張表)
+[[eval_dataset]]
+categories = ["payment_method_analysis"]
+question = "每種支付方式的平均訂單總金額是多少？"
+sql = "SELECT t1.payment_type, ROUND(AVG(t3.order_total)::NUMERIC, 2) AS avg_order_value FROM olist_order_payments_dataset t1 JOIN (SELECT order_id, SUM(price + freight_value) AS order_total FROM olist_order_items_dataset GROUP BY order_id) t3 ON t1.order_id = t3.order_id GROUP BY t1.payment_type ORDER BY avg_order_value DESC;"
+context = ["olist_order_payments_dataset.payment_type", "olist_order_payments_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.price", "olist_order_items_dataset.freight_value"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "boleto支付的總交易次數是多少？"
+sql = "SELECT COUNT(*) as boleto_transactions FROM olist_order_payments_dataset WHERE payment_type = 'boleto';"
+
+# 16. 客戶價值分析 (3張表)
+[[eval_dataset]]
+categories = ["customer_value_analysis"]
+question = "客戶平均訂單金額最高的前5名是誰？"
+sql = "SELECT T1.customer_id, ROUND(AVG(T4.order_total)::NUMERIC, 2) AS avg_order_value FROM olist_customers_dataset AS T1 JOIN olist_orders_dataset AS T2 ON T1.customer_id = T2.customer_id JOIN (SELECT T3.order_id, SUM(T3.price + T3.freight_value) AS order_total FROM olist_order_items_dataset AS T3 GROUP BY T3.order_id) AS T4 ON T2.order_id = T4.order_id GROUP BY T1.customer_id ORDER BY avg_order_value DESC LIMIT 5;"
+context = ["olist_customers_dataset.customer_id", "olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.price", "olist_order_items_dataset.freight_value"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "總消費金額最高的客戶消費了多少？"
+sql = "SELECT t1.customer_id, SUM(t3.price + t3.freight_value) as total_spent FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t2.order_id = t3.order_id GROUP BY t1.customer_id ORDER BY total_spent DESC LIMIT 1;"
+
+# 17. 賣家評分分析 (3張表)
+[[eval_dataset]]
+categories = ["seller_rating_analysis"]
+question = "平均評分最高的賣家是誰？顯示賣家ID和平均評分。"
+sql = "SELECT t1.seller_id, ROUND(AVG(t3.review_score)::NUMERIC, 2) as avg_rating FROM olist_sellers_dataset t1 JOIN olist_order_items_dataset t2 ON t1.seller_id = t2.seller_id JOIN olist_order_reviews_dataset t3 ON t2.order_id = t3.order_id GROUP BY t1.seller_id ORDER BY avg_rating DESC LIMIT 1;"
+context = ["olist_sellers_dataset.seller_id", "olist_order_items_dataset.seller_id", "olist_order_items_dataset.order_id", "olist_order_reviews_dataset.order_id", "olist_order_reviews_dataset.review_score"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個賣家的平均評分高於4分？"
+sql = "SELECT COUNT(*) as high_rating_sellers FROM (SELECT t1.seller_id, ROUND(AVG(t3.review_score)::NUMERIC, 2) as avg_rating FROM olist_sellers_dataset t1 JOIN olist_order_items_dataset t2 ON t1.seller_id = t2.seller_id JOIN olist_order_reviews_dataset t3 ON t2.order_id = t3.order_id GROUP BY t1.seller_id HAVING AVG(t3.review_score) > 4) t;"
+
+# 18. 產品類別銷售分析 (3張表)
+[[eval_dataset]]
+categories = ["category_sales_analysis"]
+question = "銷售額最高的前3個產品類別是什麽？顯示英文類別名稱和總銷售額。"
+sql = "SELECT t3.product_category_name_english, SUM(t1.price) as total_sales FROM olist_order_items_dataset t1 JOIN olist_products_dataset t2 ON t1.product_id = t2.product_id JOIN product_category_name_translation t3 ON t2.product_category_name = t3.product_category_name GROUP BY t3.product_category_name_english ORDER BY total_sales DESC LIMIT 3;"
+context = ["olist_order_items_dataset.product_id", "olist_order_items_dataset.price", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "平均單價最高的產品類別的平均價格是多少？"
+sql = "SELECT t3.product_category_name_english, ROUND(AVG(t1.price)::NUMERIC, 2) as avg_price FROM olist_order_items_dataset t1 JOIN olist_products_dataset t2 ON t1.product_id = t2.product_id JOIN product_category_name_translation t3 ON t2.product_category_name = t3.product_category_name GROUP BY t3.product_category_name_english ORDER BY avg_price DESC LIMIT 1;"
+
+# 19. 客戶評分分析 (3張表)
+[[eval_dataset]]
+categories = ["customer_rating_analysis"]
+question = "哪個州的客戶給出的平均評分最高？"
+sql = "SELECT T2.customer_state AS state FROM olist_orders_dataset AS T1 JOIN olist_customers_dataset AS T2 ON T1.customer_id = T2.customer_id JOIN olist_order_reviews_dataset AS T3 ON T1.order_id = T3.order_id GROUP BY T2.customer_state ORDER BY ROUND(AVG(T3.review_score)::NUMERIC, 2) DESC LIMIT 1;"
+context = ["olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state", "olist_order_reviews_dataset.order_id", "olist_order_reviews_dataset.review_score"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "給出5分評價的客戶有多少人？"
+sql = "SELECT COUNT(DISTINCT t2.customer_id) as five_star_customers FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_reviews_dataset t3 ON t1.order_id = t3.order_id WHERE t3.review_score = 5;"
+
+# 20. 賣家地理分析 (2張表)
+[[eval_dataset]]
+categories = ["seller_geography_analysis"]
+question = "銷售額最高的州是哪個？（按賣家所在地統計）"
+sql = "SELECT T1.seller_state AS state FROM olist_sellers_dataset AS T1 JOIN olist_order_items_dataset AS T2 ON T1.seller_id = T2.seller_id GROUP BY T1.seller_state ORDER BY SUM(T2.price) DESC LIMIT 1;"
+context = ["olist_sellers_dataset.seller_id", "olist_order_items_dataset.seller_id", "olist_order_items_dataset.price"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "SP州有多少個活躍賣家？"
+sql = "SELECT COUNT(DISTINCT t1.seller_id) as active_sellers FROM olist_sellers_dataset t1 JOIN olist_order_items_dataset t2 ON t1.seller_id = t2.seller_id WHERE t1.seller_state = 'SP';"
+
+# 21. 產品類別交付分析 (4張表)
+[[eval_dataset]]
+categories = ["category_delivery_analysis"]
+question = "哪個產品類別的平均交付時間最短？顯示英文類別名稱和平均交付天數。"
+sql = "SELECT t4.product_category_name_english, ROUND(AVG((t1.order_delivered_customer_date::date - t1.order_purchase_timestamp::date)::int), 1) AS avg_delivery_days FROM olist_orders_dataset AS t1 JOIN olist_order_items_dataset AS t2 ON t1.order_id = t2.order_id JOIN olist_products_dataset AS t3 ON t2.product_id = t3.product_id JOIN product_category_name_translation AS t4 ON t3.product_category_name = t4.product_category_name WHERE t1.order_delivered_customer_date IS NOT NULL AND t1.order_purchase_timestamp IS NOT NULL GROUP BY t4.product_category_name_english ORDER BY avg_delivery_days ASC LIMIT 1;"
+context = ["olist_orders_dataset.order_id", "olist_orders_dataset.order_delivered_customer_date", "olist_orders_dataset.order_purchase_timestamp", "olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少筆已交付的訂單？"
+sql = "SELECT COUNT(*) as delivered_orders FROM olist_orders_dataset WHERE order_status = 'delivered';"
+
+# 22. 跨州交易分析 (4張表)
+[[eval_dataset]]
+categories = ["cross_state_analysis"]
+question = "有多少筆訂單是客戶和賣家來自不同州的跨州交易？"
+sql = "SELECT COUNT(DISTINCT t2.order_id) as cross_state_orders FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t2.order_id = t3.order_id JOIN olist_sellers_dataset t4 ON t3.seller_id = t4.seller_id WHERE t1.customer_state != t4.seller_state;"
+context = ["olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state", "olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.seller_id", "olist_sellers_dataset.seller_id", "olist_sellers_dataset.seller_state"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少筆訂單的客戶和賣家來自相同的州？"
+sql = "SELECT COUNT(DISTINCT t2.order_id) as same_state_orders FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t2.order_id = t3.order_id JOIN olist_sellers_dataset t4 ON t3.seller_id = t4.seller_id WHERE t1.customer_state = t4.seller_state;"
+
+# 23. 綜合分析 (4張表複雜查詢)
+[[eval_dataset]]
+categories = ["comprehensive_analysis"]
+question = "銷售額最高的產品類別的平均評分是多少？"
+sql = "SELECT ROUND(CAST(AVG(T3.review_score) AS DECIMAL), 2) AS avg_score FROM (SELECT T2.product_category_name, SUM(T1.price) AS total_sales FROM olist_order_items_dataset AS T1 JOIN olist_products_dataset AS T2 ON T1.product_id = T2.product_id GROUP BY T2.product_category_name) AS sales JOIN olist_products_dataset AS T2 ON sales.product_category_name = T2.product_category_name JOIN olist_order_items_dataset AS T1 ON T2.product_id = T1.product_id JOIN olist_order_reviews_dataset AS T3 ON T1.order_id = T3.order_id WHERE sales.total_sales = (SELECT MAX(total_sales) FROM (SELECT T2.product_category_name, SUM(T1.price) AS total_sales FROM olist_order_items_dataset AS T1 JOIN olist_products_dataset AS T2 ON T1.product_id = T2.product_id GROUP BY T2.product_category_name) AS sub);"
+context = ["olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_order_items_dataset.price", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "olist_order_reviews_dataset.order_id", "olist_order_reviews_dataset.review_score", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "RJ州客戶的平均訂單價值是多少？"
+sql = "SELECT ROUND(AVG(t3.price)::NUMERIC, 2) as avg_order_value FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t1.order_id = t3.order_id WHERE t2.customer_state = 'RJ';"
+
+# 24. 產品重量分析 (1張表)
+[[eval_dataset]]
+categories = ["product_weight_analysis"]
+question = "重量最重的產品是什麽？顯示產品ID和重量。"
+sql = "SELECT product_id, product_weight_g FROM olist_products_dataset WHERE product_weight_g IS NOT NULL ORDER BY product_weight_g DESC LIMIT 1;"
+context = ["olist_products_dataset.product_id", "olist_products_dataset.product_weight_g"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最輕的產品重量是多少克？"
+sql = "SELECT MIN(product_weight_g) as min_weight FROM olist_products_dataset WHERE product_weight_g IS NOT NULL AND product_weight_g > 0;"
+
+# 25. 訂單狀態時間分析 (1張表)
+[[eval_dataset]]
+categories = ["order_status_time"]
+question = "已交付的訂單中，交付時間最長的是多少天？"
+sql = "SELECT MAX(DATE_PART('day', order_delivered_customer_date - order_purchase_timestamp)) AS max_delivery_days FROM olist_orders_dataset WHERE order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL AND order_purchase_timestamp IS NOT NULL;"
+context = ["olist_orders_dataset.order_status", "olist_orders_dataset.order_delivered_customer_date", "olist_orders_dataset.order_purchase_timestamp"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最早的訂單購買時間是什麼時候？"
+sql = "SELECT MIN(order_purchase_timestamp) as earliest_order FROM olist_orders_dataset;"
+
+# 26. 運費分析 (1張表)
+[[eval_dataset]]
+categories = ["freight_analysis"]
+question = "平均運費是多少？"
+sql = "SELECT ROUND(AVG(freight_value)::NUMERIC, 2) as avg_freight FROM olist_order_items_dataset WHERE freight_value IS NOT NULL;"
+context = ["olist_order_items_dataset.freight_value"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最低運費是多少？"
+sql = "SELECT MIN(freight_value) as min_freight FROM olist_order_items_dataset WHERE freight_value > 0;"
+
+# 27. 產品尺寸分析 (1張表)
+[[eval_dataset]]
+categories = ["product_dimension_analysis"]
+question = "體積最大的產品是什麽？顯示產品ID和體積。"
+sql = "SELECT product_id, (product_length_cm * product_height_cm * product_width_cm) as volume FROM olist_products_dataset WHERE product_length_cm IS NOT NULL AND product_height_cm IS NOT NULL AND product_width_cm IS NOT NULL ORDER BY volume DESC LIMIT 1;"
+context = ["olist_products_dataset.product_id", "olist_products_dataset.product_length_cm", "olist_products_dataset.product_height_cm", "olist_products_dataset.product_width_cm"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最短的產品長度是多少公分？"
+sql = "SELECT MIN(product_length_cm) as min_length FROM olist_products_dataset WHERE product_length_cm IS NOT NULL AND product_length_cm > 0;"
+
+# 28. 賣家城市分析 (1張表)
+[[eval_dataset]]
+categories = ["seller_city_analysis"]
+question = "聖保羅市有多少個賣家？"
+sql = "SELECT COUNT(*) as sellers_in_sp FROM olist_sellers_dataset WHERE seller_city = 'sao paulo';"
+context = ["olist_sellers_dataset.seller_city"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "rio de janeiro城市有多少個賣家？"
+sql = "SELECT COUNT(*) as rio_sellers FROM olist_sellers_dataset WHERE seller_city = 'rio de janeiro';"
+
+# 29. 評價時間分析 (1張表)
+[[eval_dataset]]
+categories = ["review_time_analysis"]
+question = "評價創建時間最晚的評價是什麽時候？"
+sql = "SELECT MAX(review_creation_date) as latest_review FROM olist_order_reviews_dataset;"
+context = ["olist_order_reviews_dataset.review_creation_date"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最早的評價創建時間是什麼時候？"
+sql = "SELECT MIN(review_creation_date) as earliest_review FROM olist_order_reviews_dataset;"
+
+# 30. 產品照片分析 (1張表)
+[[eval_dataset]]
+categories = ["product_photo_analysis"]
+question = "產品平均有多少張照片？計算至小數點第二位"
+sql = "SELECT ROUND(AVG(product_photos_qty)::NUMERIC, 2) as avg_photos FROM olist_products_dataset WHERE product_photos_qty IS NOT NULL;"
+context = ["olist_products_dataset.product_photos_qty"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個產品有超過5張照片？"
+sql = "SELECT COUNT(*) as many_photo_products FROM olist_products_dataset WHERE product_photos_qty > 5;"
+
+# 31. 月度銷售分析 (2張表)
+[[eval_dataset]]
+categories = ["monthly_sales_analysis"]
+question = "2017年總銷售額是多少？"
+sql = "SELECT SUM(t2.price) as total_sales FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id WHERE EXTRACT(YEAR FROM t1.order_purchase_timestamp::timestamp) = 2017;"
+context = ["olist_orders_dataset.order_purchase_timestamp", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.price"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "2018年的總銷售額是多少？"
+sql = "SELECT SUM(t2.price) as total_sales_2018 FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id WHERE EXTRACT(YEAR FROM t1.order_purchase_timestamp::timestamp) = 2018;"
+
+# 32. 客戶地理分布分析 (2張表)
+[[eval_dataset]]
+categories = ["customer_geographic_distribution"]
+question = "SP州有多少個訂單？"
+sql = "SELECT COUNT(*) as order_count FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id WHERE t1.customer_state = 'SP';"
+context = ["olist_customers_dataset.customer_state", "olist_customers_dataset.customer_id", "olist_orders_dataset.customer_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "MG州有多少個客戶？"
+sql = "SELECT COUNT(*) as mg_customers FROM olist_customers_dataset WHERE customer_state = 'MG';"
+
+# 33. 支付分期分析 (3張表)
+[[eval_dataset]]
+categories = ["payment_installment_analysis"]
+question = "SP州客戶最常使用的分期期數是多少？"
+sql = "SELECT T3.payment_installments AS number_installments FROM olist_customers_dataset AS T1 JOIN olist_orders_dataset AS T2 ON T1.customer_id = T2.customer_id JOIN olist_order_payments_dataset AS T3 ON T2.order_id = T3.order_id WHERE T1.customer_state = 'SP' GROUP BY T3.payment_installments ORDER BY COUNT(*) DESC LIMIT 1;"
+context = ["olist_order_payments_dataset.payment_installments", "olist_order_payments_dataset.order_id", "olist_orders_dataset.order_id", "olist_orders_dataset.customer_id", "olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "voucher支付的平均分期期數是多少？"
+sql = "SELECT ROUND(AVG(payment_installments)::NUMERIC, 1) as avg_installments FROM olist_order_payments_dataset WHERE payment_type = 'voucher';"
+
+# 34. 賣家銷售時間分析 (2張表)
+[[eval_dataset]]
+categories = ["seller_sales_time_analysis"]
+question = "每個賣家的平均訂單處理時間是多少？（從訂單購買到交付給承運商）"
+sql = "SELECT t2.seller_id, ROUND(AVG((t1.order_delivered_carrier_date::date - t1.order_purchase_timestamp::date)::int), 1) AS avg_processing_days FROM olist_orders_dataset AS t1 JOIN olist_order_items_dataset AS t2 ON t1.order_id = t2.order_id WHERE t1.order_delivered_carrier_date IS NOT NULL AND t1.order_purchase_timestamp IS NOT NULL GROUP BY t2.seller_id ORDER BY avg_processing_days;"
+context = ["olist_orders_dataset.order_id", "olist_orders_dataset.order_delivered_carrier_date", "olist_orders_dataset.order_purchase_timestamp", "olist_order_items_dataset.order_id", "olist_order_items_dataset.seller_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少筆訂單有交付承運商日期？"
+sql = "SELECT COUNT(*) as orders_with_carrier_date FROM olist_orders_dataset WHERE order_delivered_carrier_date IS NOT NULL;"
+
+# 35. 產品類別數量分析 (2張表)
+[[eval_dataset]]
+categories = ["category_quantity_analysis"]
+question = "產品數量最多的產品類別是什麼？顯示英文類別名稱和產品數量。"
+sql = "SELECT t2.product_category_name_english, COUNT(*) as product_count FROM olist_products_dataset t1 JOIN product_category_name_translation t2 ON t1.product_category_name = t2.product_category_name GROUP BY t2.product_category_name_english ORDER BY product_count DESC LIMIT 1;"
+context = ["olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "health_beauty產品類別有多少個產品？"
+sql = "SELECT COUNT(*) as health_beauty_count FROM olist_products_dataset t1 JOIN product_category_name_translation t2 ON t1.product_category_name = t2.product_category_name WHERE t2.product_category_name_english = 'health_beauty';"
+
+# 36. 季度銷售分析 (2張表)
+[[eval_dataset]]
+categories = ["quarterly_sales_analysis"]
+question = "2017年第四季度的總銷售額是多少？"
+sql = "SELECT SUM(t2.price) as q4_2017_sales FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id WHERE EXTRACT(YEAR FROM t1.order_purchase_timestamp::timestamp) = 2017 AND EXTRACT(QUARTER FROM t1.order_purchase_timestamp::timestamp) = 4;"
+context = ["olist_orders_dataset.order_purchase_timestamp", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.price"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "2017年第一季度的訂單數量是多少？"
+sql = "SELECT COUNT(*) as q1_orders FROM olist_orders_dataset WHERE EXTRACT(YEAR FROM order_purchase_timestamp::timestamp) = 2017 AND EXTRACT(QUARTER FROM order_purchase_timestamp::timestamp) = 1;"
+
+# 37. 客戶重複購買分析 (2張表)
+[[eval_dataset]]
+categories = ["customer_repeat_purchase_analysis"]
+question = "有多少客戶購買了超過一次？"
+sql = "SELECT COUNT(*) as repeat_customers FROM (SELECT t1.customer_id, COUNT(t2.order_id) as purchase_count FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id GROUP BY t1.customer_id HAVING COUNT(t2.order_id) > 1) t;"
+context = ["olist_customers_dataset.customer_id", "olist_orders_dataset.customer_id", "olist_orders_dataset.order_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少客戶只購買了一次？"
+sql = "SELECT COUNT(*) as single_purchase_customers FROM (SELECT t1.customer_id, COUNT(t2.order_id) as purchase_count FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id GROUP BY t1.customer_id HAVING COUNT(t2.order_id) = 1) t;"
+
+# 38. 產品類別評分分析 (3張表)
+[[eval_dataset]]
+categories = ["category_rating_analysis"]
+question = "評分最高的產品類別的平均評分是多少？"
+sql = "SELECT ROUND(CAST(AVG(T2.review_score) AS DECIMAL), 2) AS avg_review_score FROM olist_products_dataset AS T1 JOIN olist_order_items_dataset AS T3 ON T1.product_id = T3.product_id JOIN olist_order_reviews_dataset AS T2 ON T3.order_id = T2.order_id WHERE T1.product_category_name = (SELECT T4.product_category_name FROM olist_products_dataset AS T4 JOIN olist_order_items_dataset AS T5 ON T4.product_id = T5.product_id JOIN olist_order_reviews_dataset AS T6 ON T5.order_id = T6.order_id GROUP BY T4.product_category_name ORDER BY ROUND(CAST(AVG(T6.review_score) AS DECIMAL), 2) DESC LIMIT 1);"
+context = ["olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "olist_order_items_dataset.product_id", "olist_order_items_dataset.order_id", "olist_order_reviews_dataset.order_id", "olist_order_reviews_dataset.review_score"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個產品類別的平均評分高於4分？"
+sql = "SELECT COUNT(*) as high_rating_categories FROM (SELECT t3.product_category_name_english, ROUND(AVG(t1.review_score)::NUMERIC, 2) as avg_rating FROM olist_order_reviews_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id JOIN olist_products_dataset t4 ON t2.product_id = t4.product_id JOIN product_category_name_translation t3 ON t4.product_category_name = t3.product_category_name GROUP BY t3.product_category_name_english HAVING AVG(t1.review_score) > 4) t;"
+
+# 39. 賣家產品多樣性分析 (3張表)
+[[eval_dataset]]
+categories = ["seller_product_diversity_analysis"]
+question = "銷售產品類別最多的賣家銷售了多少個不同類別？"
+sql = "SELECT COUNT(DISTINCT T3.product_category_name) AS Number_different_categories FROM olist_order_items_dataset AS T1 JOIN olist_sellers_dataset AS T2 ON T1.seller_id = T2.seller_id JOIN olist_products_dataset AS T3 ON T1.product_id = T3.product_id WHERE T1.seller_id = (SELECT T1.seller_id FROM olist_order_items_dataset AS T1 JOIN olist_products_dataset AS T3 ON T1.product_id = T3.product_id GROUP BY T1.seller_id ORDER BY COUNT(DISTINCT T3.product_category_name) DESC LIMIT 1);"
+context = ["olist_sellers_dataset.seller_id", "olist_order_items_dataset.seller_id", "olist_order_items_dataset.product_id", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個賣家只銷售一種產品類別？"
+sql = "SELECT COUNT(*) as single_category_sellers FROM (SELECT t1.seller_id, COUNT(DISTINCT t3.product_category_name) as category_count FROM olist_sellers_dataset t1 JOIN olist_order_items_dataset t2 ON t1.seller_id = t2.seller_id JOIN olist_products_dataset t3 ON t2.product_id = t3.product_id GROUP BY t1.seller_id HAVING COUNT(DISTINCT t3.product_category_name) = 1) t;"
+
+# 40. 客戶消費行為分析 (3張表)
+[[eval_dataset]]
+categories = ["customer_spending_behavior_analysis"]
+question = "平均訂單項目數最多的客戶有多少個平均項目？"
+sql = "SELECT t1.customer_id, ROUND(AVG(order_items)::NUMERIC, 1) as avg_items_per_order FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id JOIN (SELECT order_id, COUNT(*) as order_items FROM olist_order_items_dataset GROUP BY order_id) t3 ON t2.order_id = t3.order_id GROUP BY t1.customer_id ORDER BY avg_items_per_order DESC LIMIT 1;"
+context = ["olist_customers_dataset.customer_id", "olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少筆訂單只有一個項目？"
+sql = "SELECT COUNT(*) as single_item_orders FROM (SELECT order_id, COUNT(*) as order_items FROM olist_order_items_dataset GROUP BY order_id HAVING COUNT(*) = 1) t;"
+
+# 41. 支付金額分析 (1張表)
+[[eval_dataset]]
+categories = ["payment_amount_analysis"]
+question = "每種支付方式的平均支付金額是多少？"
+sql = "SELECT payment_type, ROUND(AVG(payment_value)::NUMERIC, 2) as avg_payment_amount FROM olist_order_payments_dataset GROUP BY payment_type ORDER BY avg_payment_amount DESC;"
+context = ["olist_order_payments_dataset.payment_type", "olist_order_payments_dataset.payment_value"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "debit_card支付的總金額是多少？"
+sql = "SELECT SUM(payment_value) as debit_card_total FROM olist_order_payments_dataset WHERE payment_type = 'debit_card';"
+
+# 42. 賣家評價與銷售分析 (3張表)
+[[eval_dataset]]
+categories = ["seller_rating_sales_analysis"]
+question = "每個評分區間的平均訂單價值是多少？（評分1-2為低評分，3為中評分，4-5為高評分）"
+sql = "SELECT CASE WHEN T2.review_score IN (1, 2) THEN 'Low rating' WHEN T2.review_score = 3 THEN 'Medium rating' WHEN T2.review_score IN (4, 5) THEN 'High rating' END AS rating_range, ROUND(AVG(T1.order_total)::NUMERIC, 2) AS avg_order_value FROM (SELECT order_id, SUM(price + freight_value) AS order_total FROM olist_order_items_dataset GROUP BY order_id) AS T1 JOIN olist_order_reviews_dataset AS T2 ON T1.order_id = T2.order_id GROUP BY CASE WHEN T2.review_score IN (1, 2) THEN 'Low rating' WHEN T2.review_score = 3 THEN 'Medium rating' WHEN T2.review_score IN (4, 5) THEN 'High rating' END ORDER BY rating_range;"
+context = ["olist_order_items_dataset.order_id", "olist_order_items_dataset.price", "olist_order_items_dataset.freight_value", "olist_order_reviews_dataset.order_id", "olist_order_reviews_dataset.review_score"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "高評分（4-5分）訂單的數量是多少？"
+sql = "SELECT COUNT(*) as high_rating_orders FROM olist_order_reviews_dataset WHERE review_score >= 4;"
+
+# 43. 地理位置精確分析 (1張表)
+[[eval_dataset]]
+categories = ["precise_geolocation_analysis"]
+question = "最高緯度是多少？"
+sql = "SELECT MAX(geolocation_lat) as max_latitude FROM olist_geolocation_dataset;"
+context = ["olist_geolocation_dataset.geolocation_lat"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "最低經度是多少？"
+sql = "SELECT MIN(geolocation_lng) as min_longitude FROM olist_geolocation_dataset;"
+
+# 44. 客戶訂單評分分析 (3張表)
+[[eval_dataset]]
+categories = ["customer_order_rating_analysis"]
+question = "SP州客戶的訂單總數是多少？"
+sql = "SELECT COUNT(T2.order_id) AS total_orders FROM olist_customers_dataset AS T1 JOIN olist_orders_dataset AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_state = 'SP';"
+context = ["olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state", "olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_order_reviews_dataset.order_id"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "SP州對家具用品類別的平均評分是多少？"
+sql = "SELECT ROUND(AVG(t4.review_score)::NUMERIC, 2) as avg_rating FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t1.order_id = t3.order_id JOIN olist_order_reviews_dataset t4 ON t1.order_id = t4.order_id JOIN olist_products_dataset t6 ON t3.product_id = t6.product_id JOIN product_category_name_translation t5 ON t6.product_category_name = t5.product_category_name WHERE t2.customer_state = 'SP' AND t5.product_category_name_english = 'furniture_decor';"
+
+# 45. 產品描述長度分析
+[[eval_dataset]]
+categories = ["product_description_analysis"]
+question = "產品描述長度的平均值是多少？"
+sql = "SELECT ROUND(AVG(product_description_lenght)::NUMERIC, 1) as avg_description_length FROM olist_products_dataset WHERE product_description_lenght IS NOT NULL;"
+context = ["olist_products_dataset.product_description_lenght"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "有多少個賣家有訂單評價記錄？"
+sql = "SELECT COUNT(DISTINCT t1.seller_id) as sellers_with_reviews FROM olist_sellers_dataset t1 JOIN olist_order_items_dataset t3 ON t1.seller_id = t3.seller_id JOIN olist_order_reviews_dataset t4 ON t3.order_id = t4.order_id;"
+
+# 46. 產品類別價格區間分析 (4張表)
+[[eval_dataset]]
+categories = ["category_price_range_analysis"]
+question = "health_beauty產品類別在高價格區間（價格>100）的銷售額是多少？"
+sql = "SELECT SUM(t2.price) as high_price_sales FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id JOIN olist_products_dataset t3 ON t2.product_id = t3.product_id JOIN product_category_name_translation t4 ON t3.product_category_name = t4.product_category_name WHERE t2.price > 100 AND t4.product_category_name_english = 'health_beauty';"
+context = ["olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_order_items_dataset.price", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "高價格區間（價格>100）的總銷售額是多少？"
+sql = "SELECT SUM(t2.price) as high_price_sales FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id WHERE t2.price > 100;"
+
+# 47. 支付方式地理分析 (3張表)
+[[eval_dataset]]
+categories = ["payment_method_geographic_analysis"]
+question = "SP州最受歡迎的支付方式是什麽？"
+sql = "SELECT T3.payment_type AS Payment_method FROM olist_customers_dataset AS T1 JOIN olist_orders_dataset AS T2 ON T1.customer_id = T2.customer_id JOIN olist_order_payments_dataset AS T3 ON T2.order_id = T3.order_id WHERE T1.customer_state = 'SP' GROUP BY T3.payment_type ORDER BY COUNT(*) DESC LIMIT 1;"
+context = ["olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_customers_dataset.customer_id", "olist_customers_dataset.customer_state", "olist_order_payments_dataset.order_id", "olist_order_payments_dataset.payment_type"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "SP州使用信用卡支付的次數是多少？"
+sql = "SELECT COUNT(*) as sp_credit_card_payments FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_payments_dataset t4 ON t1.order_id = t4.order_id WHERE t2.customer_state = 'SP' AND t4.payment_type = 'credit_card';"
+
+# 48. 產品類別訂單分析 (5張表)
+[[eval_dataset]]
+categories = ["category_order_comprehensive_analysis"]
+question = "health_beauty產品類別的訂單總數是多少？"
+sql = "SELECT COUNT(*) as total_orders FROM olist_orders_dataset t1 JOIN olist_customers_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t1.order_id = t3.order_id JOIN olist_products_dataset t4 ON t3.product_id = t4.product_id JOIN product_category_name_translation t5 ON t4.product_category_name = t5.product_category_name WHERE t5.product_category_name_english = 'health_beauty';"
+context = ["olist_orders_dataset.customer_id", "olist_orders_dataset.order_id", "olist_customers_dataset.customer_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "第一次購買客戶的平均訂單價值是多少？"
+sql = "SELECT ROUND(AVG(t3.price)::NUMERIC, 2) as avg_order_value FROM olist_customers_dataset t1 JOIN olist_orders_dataset t2 ON t1.customer_id = t2.customer_id JOIN olist_order_items_dataset t3 ON t2.order_id = t3.order_id WHERE t1.customer_id IN (SELECT customer_id FROM olist_orders_dataset GROUP BY customer_id HAVING COUNT(order_id) = 1);"
+
+# 49. 產品重量與類別分析 (4張表)
+[[eval_dataset]]
+categories = ["product_weight_category_analysis"]
+question = "重量最重的前3個產品類別的平均重量是多少？"
+sql = "SELECT t4.product_category_name_english, ROUND(AVG(t3.product_weight_g)::NUMERIC, 1) as avg_weight FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id JOIN olist_products_dataset t3 ON t2.product_id = t3.product_id JOIN product_category_name_translation t4 ON t3.product_category_name = t4.product_category_name WHERE t3.product_weight_g IS NOT NULL GROUP BY t4.product_category_name_english ORDER BY avg_weight DESC LIMIT 3;"
+context = ["olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_products_dataset.product_id", "olist_products_dataset.product_weight_g", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "重量超過1000克的產品有多少個？"
+sql = "SELECT COUNT(*) as heavy_products FROM olist_products_dataset WHERE product_weight_g > 1000;"
+
+# 50. 市場趨勢綜合分析 (4張表)
+[[eval_dataset]]
+categories = ["market_trend_comprehensive_analysis"]
+question = "2017年銷售數量最多的產品類別是什麽？"
+sql = "SELECT T4.product_category_name_english AS product_category FROM olist_order_items_dataset AS T1 JOIN olist_orders_dataset AS T2 ON T1.order_id = T2.order_id JOIN olist_products_dataset AS T3 ON T1.product_id = T3.product_id JOIN product_category_name_translation AS T4 ON T3.product_category_name = T4.product_category_name WHERE T2.order_purchase_timestamp >= '2017-01-01' AND T2.order_purchase_timestamp < '2018-01-01' GROUP BY T4.product_category_name_english ORDER BY COUNT(*) DESC LIMIT 1;"
+context = ["olist_orders_dataset.order_purchase_timestamp", "olist_orders_dataset.order_id", "olist_order_items_dataset.order_id", "olist_order_items_dataset.product_id", "olist_products_dataset.product_id", "olist_products_dataset.product_category_name", "product_category_name_translation.product_category_name", "product_category_name_translation.product_category_name_english"]
+instructions = [""]
+
+[[eval_dataset.samples]]
+question = "2017年health_beauty產品類別的銷售數量是多少？"
+sql = "SELECT COUNT(*) as health_beauty_2017_sales FROM olist_orders_dataset t1 JOIN olist_order_items_dataset t2 ON t1.order_id = t2.order_id JOIN olist_products_dataset t3 ON t2.product_id = t3.product_id JOIN product_category_name_translation t4 ON t3.product_category_name = t4.product_category_name WHERE EXTRACT(YEAR FROM t1.order_purchase_timestamp::timestamp) = 2017 AND t4.product_category_name_english = 'health_beauty';"
