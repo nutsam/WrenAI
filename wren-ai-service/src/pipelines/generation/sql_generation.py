@@ -79,19 +79,17 @@ User's Question: {{ query }}
   2. or wrapped with an aggregate function like `COUNT`, `MAX`, or `MIN`.
 - Do not use columns in `ORDER BY` or `SELECT` that are not grouped or aggregated.
 - When the exact value is not important in `GROUP BY` queries, use an aggregate function like `MAX()` or `MIN()` to select a representative value.
-- **Do not use double quotes around table names, column names, or aliases** unless the name contains special characters or spaces.
+- Do not use double quotes around alias names. Use `AS 別名` for aliasing.
 - The SQL must be **syntactically correct** and compatible with **PostgreSQL**.
-- Avoid ambiguous column references. Always use `alias.column_name` format.
+- Avoid ambiguous column references. Always use `T1.column_name` or `T2.column_name`.
 - **Do not use SQL reserved keywords (e.g., `OR`, `AND`, `SELECT`, `FROM`, `GROUP`, `ORDER`) as alias names.** Use alternative names like `T1`, `reviews`, `items`, etc.
-- **Never treat column names as table names.** In `FROM` clauses, use actual table names only (e.g., `FROM table_name AS T1`). **Do not write `FROM "table"."column"`** or `FROM table.column`—this causes schema resolution errors.
-- **Table/column identification**: Carefully distinguish between table names and column names in the schema. Use only table names in FROM clauses.
+- **Never treat column names as table names.** In `FROM` clauses, use actual table names only (e.g., `FROM table_1 AS T1`). **Do not write `FROM table.column`**—this causes schema resolution errors.
 
 ### TABLE ALIAS RULES ###
 1. **Define table aliases in FROM clause**: `FROM table_name AS alias`
 2. **Use aliases in SELECT**: `SELECT alias.column_name`
 3. **No quotes needed for standard names**: `FROM olist_products AS p`
-4. **Only use quotes when names contain special characters or spaces**: `FROM "table name with spaces" AS t`
-5. **Never quote standard aliases**: Use `AS p`, not `AS "p"`
+4. **Only use quotes when names contain special characters**
 
 ### CORRECT PATTERN ###
 ```sql
@@ -238,12 +236,9 @@ SELECT CAST(AVG(price) AS NUMERIC(10,2)) FROM products;
 SELECT ROUND((SUM(amount)/COUNT(*))::NUMERIC, 2) FROM transactions;
 ```
 
-{% if sql_generation_reasoning %}
-### REASONING PLAN ###
-{{ sql_generation_reasoning }}
-{% endif %}
 
-Let's think step by step and ensure all aggregate functions use proper precision control.
+
+Let's think step by step and ensure all aggregate functions use proper precision control."
 """
 
 
