@@ -1,2 +1,4 @@
 .env
-config.yaml
+*.toml
+*.sql
+*.png
